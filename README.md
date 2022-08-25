@@ -12,7 +12,10 @@ npm install flowbuild-diagrams-core
 ## Usage
 
 ```js
-const { Diagram } = require('flowbuild-diagrams-core');
+const { DiagramCore } = require('flowbuild-diagrams-core');
+const diagramCore = new DiagramCore(db);
+
+// note that 'db' has to be a database configuration
 ```
 
 ## Environment variables
