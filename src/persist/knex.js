@@ -1,4 +1,4 @@
-const { Diagram } = require('../diagramCore');
+const { Diagram } = require('../entities/diagram');
 
 class KnexPersist {
   constructor(db, class_, table) {

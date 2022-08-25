@@ -1,4 +1,3 @@
-const { v4: uuid, validate } = require('uuid');
 const { logger } = require('./utils/logger');
 const { PersistorProvider } = require('./persist/provider');
 const _ = require('lodash');
