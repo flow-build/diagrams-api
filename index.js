@@ -1,5 +1,5 @@
-const Diagram = require('./src/diagram');
+const { DiagramCore } = require('./src/diagramCore');
 
 module.exports = {
-  Diagram
+  DiagramCore
 }
