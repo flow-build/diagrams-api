@@ -1,6 +1,6 @@
 {
   "name": "flowbuild-diagrams-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "BPMN diagrams manager",
   "main": "index.js",
   "scripts": {
