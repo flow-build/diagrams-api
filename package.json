@@ -1,6 +1,6 @@
 {
   "name": "@flowbuild/diagrams-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "BPMN diagrams manager",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,9 @@
   ],
   "author": "Pedro Assis",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/flow-build/diagrams-core/issues"
   },
