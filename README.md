@@ -6,13 +6,13 @@ diagrams-core is a BPMN diagrams manager for your project.
 
 Run the following command in your terminal:
 ```
-npm install flowbuild-diagrams-core
+npm install @flowbuild/diagrams-core
 ```
 
 ## Usage
 
 ```js
-const { DiagramCore } = require('flowbuild-diagrams-core');
+const { DiagramCore } = require('@flowbuild/diagrams-core');
 const diagramCore = new DiagramCore(db);
 
 // note that 'db' has to be a database configuration
