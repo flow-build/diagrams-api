@@ -12,6 +12,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: diagrams
+  POSTGRES_HOST: localhost
 
 jobs:
   build:
