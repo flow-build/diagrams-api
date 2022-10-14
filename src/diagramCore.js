@@ -32,9 +32,9 @@ class DiagramCore {
 
   async saveDiagram(diagram_obj) {
     logger.debug('saveDiagram service called');
-    const { name, user_id, diagram_xml, workflow_id } = diagram_obj;
+    const { name, user_id, diagram_xml, workflow_id, aligned } = diagram_obj;
 
-    return await new Diagram(name, user_id, diagram_xml, workflow_id).save();
+    return await new Diagram(name, user_id, diagram_xml, workflow_id, aligned).save();
   }
 
   async getAllDiagrams() {
