@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/flow-build/diagrams-core/compare/v1.0.2...v1.1.0) (2022-10-14)
+
+
+### Features
+
+* add new property 'aligned' for Diagram ([866e6c5](https://github.com/flow-build/diagrams-core/commit/866e6c571043af01b087842a01c2323378f579c7))
+
 ## [1.0.2](https://github.com/flow-build/diagrams-core/compare/v1.0.1...v1.0.2) (2022-09-10)
 
 
