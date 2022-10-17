@@ -1,6 +1,5 @@
 const { logger } = require('./utils/logger');
 const { PersistorProvider } = require('./persist/provider');
-const _ = require('lodash');
 const { Diagram } = require('./entities/diagram');
 
 class DiagramCore {
@@ -32,9 +31,9 @@ class DiagramCore {
 
   async saveDiagram(diagram_obj) {
     logger.debug('saveDiagram service called');
-    const { name, user_id, diagram_xml, workflow_id, aligned } = diagram_obj;
+    const { name, user_id, diagram_xml } = diagram_obj;
 
-    return await new Diagram(name, user_id, diagram_xml, workflow_id, aligned).save();
+    return await new Diagram(name, user_id, diagram_xml).save();
   }
 
   async getAllDiagrams() {
