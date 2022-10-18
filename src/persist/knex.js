@@ -26,7 +26,11 @@ class DiagramKnexPersist extends KnexPersist {
   }
 
   async getAll() {
-    return await this._db(this._table).select('*').orderBy('updated_at', 'desc');
+    return await this._db(this._table)
+      .select('id', 'name', 'diagram_xml', 'blueprint_id','user_id', 'created_at', 
+      'updated_at', 'aligned', 'workflow_id')
+      .leftJoin('diagram_to_workflow', 'diagram_to_workflow.diagram_id', `${this._table}.id`)
+      .orderBy('updated_at', 'desc');
   }
 
   async save(diagram) {
@@ -41,7 +45,11 @@ class DiagramKnexPersist extends KnexPersist {
   }
 
   async getByUserId(user_id) {
-    return await this._db(this._table).select('*').where('user_id', user_id)
+    return await this._db(this._table)
+      .select('id', 'name', 'diagram_xml', 'blueprint_id','user_id', 'created_at', 
+        'updated_at', 'aligned', 'workflow_id')
+      .leftJoin('diagram_to_workflow', 'diagram_to_workflow.diagram_id', `${this._table}.id`)
+      .where('user_id', user_id)
       .orderBy('updated_at', 'desc');
   }
   
