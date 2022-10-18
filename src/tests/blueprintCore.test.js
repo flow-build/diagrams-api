@@ -1,6 +1,6 @@
 const { BlueprintCore } = require('../blueprintCore');
 const { Blueprint } = require('../entities/blueprint');
-const blueprintSample = require('../../examples/blueprint');
+const { blueprint_spec } = require('../../examples/blueprint');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../persist/provider");
 const { db } = require('../utils/db');
@@ -24,16 +24,16 @@ describe('BlueprintCore tests ', () => {
   
   test('create blueprint', async () => {
     const blueprintCore = new BlueprintCore(db);
-    const blueprintCreated = await blueprintCore.saveBlueprint(blueprintSample);
+    const blueprintCreated = await blueprintCore.saveBlueprint(blueprint_spec);
     expect(validate(blueprintCreated.id)).toBeTruthy();
-    expect(blueprintCreated.blueprint_spec).toEqual(blueprintSample.blueprint_spec);
+    expect(blueprintCreated.blueprint_spec).toEqual(blueprint_spec);
   });
   
   test('get blueprint by id', async () => {
     const blueprintCore = new BlueprintCore(db);
-    const blueprintCreated = await blueprintCore.saveBlueprint(blueprintSample);
+    const blueprintCreated = await blueprintCore.saveBlueprint(blueprint_spec);
     const blueprint = await blueprintCore.getBlueprintById(blueprintCreated.id);
     expect(blueprint.id).toEqual(blueprintCreated.id);
-    expect(blueprint.blueprint_spec).toEqual(blueprintCreated.blueprint_spec);
+    expect(blueprint.blueprint_spec).toEqual(blueprint_spec);
   });
 });

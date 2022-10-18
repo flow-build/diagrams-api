@@ -29,9 +29,8 @@ class BlueprintCore {
     Blueprint.instance = this;
   }
 
-  async saveBlueprint(blueprint_obj) {
+  async saveBlueprint(blueprint_spec) {
     logger.debug('saveBlueprint service called');
-    const { blueprint_spec } = blueprint_obj;
 
     return await new Blueprint(blueprint_spec).save();
   }
