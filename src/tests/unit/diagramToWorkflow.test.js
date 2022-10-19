@@ -27,25 +27,24 @@ describe('DiagramToWorkflow tests', () => {
   });
 
   test('save diagram2workflow', async () => {
-    const diagramToWorkflow = new DiagramToWorkflow(saved_diagram.id, '325c80a7-35c4-4af9-83b0-58e40af88b05');
+    const diagramToWorkflow = new DiagramToWorkflow(saved_diagram.id, 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     const saved_diagram_to_workflow = await diagramToWorkflow.save();
     expect(validate(saved_diagram_to_workflow.diagram_id)).toBeTruthy();
     expect(validate(saved_diagram_to_workflow.workflow_id)).toBeTruthy();
     expect(saved_diagram_to_workflow.diagram_id).toEqual(saved_diagram.id);
-    expect(saved_diagram_to_workflow.workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    expect(saved_diagram_to_workflow.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
 
-  test('fetch workflow_id by diagram_id', async () => {
-    const fetched_workflow_id = await DiagramToWorkflow.fetchWorkflowIdByDiagramId(saved_diagram.id);
-    expect(validate(fetched_workflow_id.diagram_id)).toBeTruthy();
-    expect(fetched_workflow_id.diagram_id).toEqual(saved_diagram.id);
-    expect(fetched_workflow_id.workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+  test('fetch workflow by diagram_id', async () => {
+    const fetched_workflow = await DiagramToWorkflow.fetchWorkflowIdByDiagramId(saved_diagram.id);
+    expect(validate(fetched_workflow.diagram_id)).toBeTruthy();
+    expect(fetched_workflow.diagram_id).toEqual(saved_diagram.id);
+    expect(fetched_workflow.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
 
-  test('fetch diagram_id by workflow_id', async () => {
-    const fetched_workflow_id = await DiagramToWorkflow.fetchDiagramIdByWorkflowId('325c80a7-35c4-4af9-83b0-58e40af88b05');
-    expect(validate(fetched_workflow_id.diagram_id)).toBeTruthy();
-    expect(fetched_workflow_id.diagram_id).toEqual(saved_diagram.id);
-    expect(fetched_workflow_id.workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+  test('fetch diagram_ids by workflow_id', async () => {
+    const fetched_diagram_ids = await DiagramToWorkflow.fetchDiagramIdsByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(fetched_diagram_ids.length).toBeTruthy();
+    expect(validate(fetched_diagram_ids[0].diagram_id)).toBeTruthy();
   });
 });

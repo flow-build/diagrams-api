@@ -1,10 +1,6 @@
 const { Workflow } = require('../../entities/workflow');
-const { Blueprint } = require('../../entities/blueprint');
-const { DiagramToWorkflow } = require('../../entities/diagramToWorkflow');
-const { Diagram } = require('../../entities/diagram');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../../persist/provider");
-const diagramExample = require('fs').readFileSync('./examples/diagram.xml', 'utf8');
 const { db } = require('../../utils/db');
 
 beforeAll(async () => {
@@ -15,22 +11,11 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await db.raw('ROLLBACK');
-  const persistDiagramTiWorkflow = DiagramToWorkflow.getPersist();
-  await persistDiagramTiWorkflow._db.destroy();
   const persistWorkflow = Workflow.getPersist();
   await persistWorkflow._db.destroy();
-  const persistDiagram = Diagram.getPersist();
-  await persistDiagram._db.destroy();
 });
 
 describe('Workflow tests', () => {
-
-  beforeAll(async () => {
-    const diagram = new Diagram('Test', '1', diagramExample);
-    const saved_diagram = await diagram.save();
-    const diagramToWorkflow = new DiagramToWorkflow(saved_diagram.id, '325c80a7-35c4-4af9-83b0-58e40af88b05');
-    await diagramToWorkflow.save();
-  });
 
   test('save workflow', async () => {
     const workflowInstance = new Workflow('325c80a7-35c4-4af9-83b0-58e40af88b05',

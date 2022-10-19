@@ -1,5 +1,4 @@
 const { Diagram } = require('../entities/diagram');
-const { DiagramToWorkflow } = require('../entities/diagramToWorkflow');
 const { DiagramCore } = require('../diagramCore');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../persist/provider");
@@ -76,35 +75,31 @@ describe('DiagramCore tests (without workflow_id)', () => {
     const diagramCore = new DiagramCore(db);
     const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
     await diagramCore.deleteDiagram(diagramCreated.id);
-    const diagram = await diagramCore.getDiagramById(diagramCreated.id)
+    const diagram = await diagramCore.getDiagramById(diagramCreated.id);
+    expect(diagram).not.toBeTruthy();
   });
 });
 
 describe('DiagramCore tests (with workflow_id)', () => {
-  let diagramCore;
-
-  beforeAll(async () => {
-    diagramCore = new DiagramCore(db);
-    const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
-    const diagramToWorkflow = new DiagramToWorkflow(diagramCreated.id, '325c80a7-35c4-4af9-83b0-58e40af88b05');
-    await diagramToWorkflow.save();
-  });
 
   test('get diagrams by workflow_id', async () => {
-    const diagrams = await diagramCore.getDiagramsByWorkflowId('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    const diagramCore = new DiagramCore(db);
+    const diagrams = await diagramCore.getDiagramsByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(diagrams.length).toBeTruthy();
-    expect(diagrams[0].workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    expect(diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
   
   test('get latest diagram by workflow_id', async () => {
-    const diagram = await diagramCore.getLatestDiagramByWorkflowId('325c80a7-35c4-4af9-83b0-58e40af88b05');
-    expect(diagram.workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    const diagramCore = new DiagramCore(db);
+    const diagram = await diagramCore.getLatestDiagramByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(diagram.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
   
   test('get diagrams by user_id and workflow_id', async () => {
-    const diagrams = await diagramCore.getDiagramsByUserAndWF('1', '325c80a7-35c4-4af9-83b0-58e40af88b05');
+    const diagramCore = new DiagramCore(db);
+    const diagrams = await diagramCore.getDiagramsByUserAndWF('1', 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(diagrams.length).toBeTruthy();
     expect(diagrams[0].user_id).toEqual('1');
-    expect(diagrams[0].workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    expect(diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
 });

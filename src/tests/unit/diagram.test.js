@@ -1,7 +1,4 @@
 const { Diagram } = require('../../entities/diagram');
-const { Blueprint } = require('../../entities/blueprint');
-const { Workflow } = require('../../entities/workflow');
-const { DiagramToWorkflow } = require('../../entities/diagramToWorkflow');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../../persist/provider");
 const diagramExample = require('fs').readFileSync('./examples/diagram.xml', 'utf8');
@@ -16,12 +13,6 @@ afterAll(async () => {
   await db.raw('ROLLBACK');
   const persistDiagram = Diagram.getPersist();
   await persistDiagram._db.destroy();
-  const persistWorkflow = Workflow.getPersist();
-  await persistWorkflow._db.destroy();
-  const persistBlueprint = Blueprint.getPersist();
-  await persistBlueprint._db.destroy();
-  const persistDiagramToWorkflow = DiagramToWorkflow.getPersist();
-  await persistDiagramToWorkflow._db.destroy();
 });
 
 describe('Diagram tests (without workflow_id)', () => {
@@ -77,32 +68,24 @@ describe('Diagram tests (without workflow_id)', () => {
 });
 
 describe('Diagram tests (with workflow_id)', () => {
-  let saved_diagram;
-
-  beforeAll(async () => {
-    const diagram = new Diagram('Test', '1', diagramExample);
-    saved_diagram = await diagram.save();
-    const diagramToWorkflow = new DiagramToWorkflow(saved_diagram.id, '325c80a7-35c4-4af9-83b0-58e40af88b05');
-    await diagramToWorkflow.save();
-  });
 
   test('getDiagramsByWorkflowId', async () => {
-    const fetched_diagrams = await Diagram.fetchByWorkflowId('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    const fetched_diagrams = await Diagram.fetchByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(fetched_diagrams.length).toBeTruthy();
-    expect(fetched_diagrams[0].workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
-    expect(fetched_diagrams[0].name).toEqual('Test');
+    expect(fetched_diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(fetched_diagrams[0].name).toEqual('Example Diagram');
   });
 
   test('getLatestDiagramByWorkflowId', async () => {
-    const fetched_diagram = await Diagram.fetchLatestByWorkflowId('325c80a7-35c4-4af9-83b0-58e40af88b05');
-    expect(fetched_diagram.workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
-    expect(fetched_diagram.name).toEqual('Test');
+    const fetched_diagram = await Diagram.fetchLatestByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(fetched_diagram.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(fetched_diagram.name).toEqual('Example Diagram');
   });
 
   test('getDiagramsByUserAndWF', async () => {
-    const fetched_diagrams = await Diagram.fetchByUserAndWF('1', '325c80a7-35c4-4af9-83b0-58e40af88b05');
+    const fetched_diagrams = await Diagram.fetchByUserAndWF('1', 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(fetched_diagrams.length).toBeTruthy();
-    expect(fetched_diagrams[0].workflow_id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    expect(fetched_diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(fetched_diagrams[0].user_id).toEqual('1');
   });
 })
