@@ -23,12 +23,13 @@ class Diagram extends PersistedEntity {
     return {
       id: data.id,
       name: data.name,
-      workflow_id: data.workflow_id,
+      blueprint_id: data.blueprint_id,
       aligned: data.aligned,
       user_id: data.user_id,
       diagram_xml: data.diagram_xml,
       created_at: data.created_at,
-      updated_at: data.updated_at
+      updated_at: data.updated_at,
+      workflow_id: data.workflow_id
     }
   }
 
@@ -38,20 +39,18 @@ class Diagram extends PersistedEntity {
       name: diagram.name,
       user_id: diagram.user_id,
       diagram_xml: diagram.diagram_xml,
-      workflow_id: diagram.workflow_id,
+      blueprint_id: diagram.blueprint_id,
       aligned: diagram.aligned
     }
   }
 
-  constructor(name, user_id, diagram_xml, workflow_id = null, aligned = null, id = null) {
+  constructor(name, user_id, diagram_xml) {
     super();
 
-    this.id = id || uuid();
+    this.id = uuid();
     this.name = name;
     this.user_id = user_id;
     this.diagram_xml = diagram_xml;
-    this.workflow_id = workflow_id;
-    this.aligned = aligned;
   }
 
 }

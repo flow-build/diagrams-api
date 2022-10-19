@@ -8,29 +8,21 @@ const { db } = require('../utils/db');
 const diagramPayload = {
   name: 'Test',
   user_id: '1',
-  diagram_xml: diagramExample,
-  workflow_id: '4e9ed734-7680-4a17-a05b-4c19ac920428',
-  aligned: true
+  diagram_xml: diagramExample
 }
 
 beforeAll(async () => {
   PersistorProvider.getPersistor(db);
-});
-
-beforeEach(() => {
   return db.raw('START TRANSACTION');
 });
 
-afterEach(() => {
-  return db.raw('ROLLBACK');
-});
-
 afterAll(async () => {
+  await db.raw('ROLLBACK');
   const persist = Diagram.getPersist();
   await persist._db.destroy();
 });
 
-describe('DiagramCore tests', () => {
+describe('DiagramCore tests (without workflow_id)', () => {
   test('constructor works', () => {
     const diagramCore = new DiagramCore(db);
     expect(diagramCore).toBeInstanceOf(DiagramCore);
@@ -41,16 +33,13 @@ describe('DiagramCore tests', () => {
     const diagram = await diagramCore.saveDiagram(diagramPayload);
     expect(validate(diagram.id)).toBeTruthy();
     expect(diagram.name).toEqual('Test');
-    expect(diagram.aligned).toBeTruthy();
   });
   
-  test('get all diagram', async () => {
+  test('get all diagrams', async () => {
     const diagramCore = new DiagramCore(db);
-    const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
+    diagramCore.saveDiagram(diagramPayload);
     const diagrams = await diagramCore.getAllDiagrams(diagramPayload);
     expect(diagrams.length).toBeTruthy();
-    expect(diagrams[0].id).toEqual(diagramCreated.id);
-    expect(diagrams[0].aligned).toBeTruthy();
   });
   
   test('get diagrams by user_id', async () => {
@@ -60,7 +49,6 @@ describe('DiagramCore tests', () => {
     expect(diagrams.length).toBeTruthy();
     expect(diagrams[0].user_id).toEqual(diagramCreated.user_id);
     expect(diagrams[0].user_id).toEqual('1');
-    expect(diagrams[0].aligned).toBeTruthy();
   });
   
   test('get diagram by id', async () => {
@@ -70,42 +58,15 @@ describe('DiagramCore tests', () => {
     expect(diagram).toBeDefined();
   });
   
-  test('get diagrams by workflow_id', async () => {
-    const diagramCore = new DiagramCore(db);
-    const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
-    const diagrams = await diagramCore.getDiagramsByWorkflowId('4e9ed734-7680-4a17-a05b-4c19ac920428');
-    expect(diagrams.length).toBeTruthy();
-    expect(diagrams[0].workflow_id).toEqual(diagramCreated.workflow_id);
-    expect(diagrams[0].workflow_id).toEqual('4e9ed734-7680-4a17-a05b-4c19ac920428');
-    expect(diagrams[0].aligned).toBeTruthy();
-  });
-  
-  test('get latest diagram by workflow_id', async () => {
-    const diagramCore = new DiagramCore(db);
-    const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
-    const diagram = await diagramCore.getLatestDiagramByWorkflowId('4e9ed734-7680-4a17-a05b-4c19ac920428');
-    expect(diagram.workflow_id).toEqual(diagramCreated.workflow_id);
-    expect(diagram.workflow_id).toEqual('4e9ed734-7680-4a17-a05b-4c19ac920428');
-    expect(diagram.aligned).toBeTruthy();
-  });
-  
-  test('get diagrams by user_id and workflow_id', async () => {
-    const diagramCore = new DiagramCore(db);
-    await diagramCore.saveDiagram(diagramPayload);
-    const diagrams = await diagramCore.getDiagramsByUserAndWF('1', '4e9ed734-7680-4a17-a05b-4c19ac920428');
-    expect(diagrams.length).toBeTruthy();
-    expect(diagrams[0].user_id).toEqual('1');
-    expect(diagrams[0].workflow_id).toEqual('4e9ed734-7680-4a17-a05b-4c19ac920428');
-    expect(diagrams[0].aligned).toBeTruthy();
-  });
-  
   test('update diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
     const diagramUpdated = await diagramCore.updateDiagram(diagramCreated.id, {
-      name: 'Test Update'
+      name: 'Test Update',
+      blueprint_id: '42a9a60e-e2e5-4d21-8e2f-67318b100e38',
+      aligned: true
     });
-    expect(diagramUpdated.workflow_id).toEqual('4e9ed734-7680-4a17-a05b-4c19ac920428');
+    expect(diagramUpdated.blueprint_id).toEqual('42a9a60e-e2e5-4d21-8e2f-67318b100e38');
     expect(diagramUpdated.name).toEqual('Test Update');
     expect(diagramUpdated.aligned).toBeTruthy();
   });
@@ -114,7 +75,31 @@ describe('DiagramCore tests', () => {
     const diagramCore = new DiagramCore(db);
     const diagramCreated = await diagramCore.saveDiagram(diagramPayload);
     await diagramCore.deleteDiagram(diagramCreated.id);
-    const diagram = await diagramCore.getDiagramById(diagramCreated.id)
+    const diagram = await diagramCore.getDiagramById(diagramCreated.id);
     expect(diagram).not.toBeTruthy();
   });
-})
+});
+
+describe('DiagramCore tests (with workflow_id)', () => {
+
+  test('get diagrams by workflow_id', async () => {
+    const diagramCore = new DiagramCore(db);
+    const diagrams = await diagramCore.getDiagramsByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(diagrams.length).toBeTruthy();
+    expect(diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+  });
+  
+  test('get latest diagram by workflow_id', async () => {
+    const diagramCore = new DiagramCore(db);
+    const diagram = await diagramCore.getLatestDiagramByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(diagram.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+  });
+  
+  test('get diagrams by user_id and workflow_id', async () => {
+    const diagramCore = new DiagramCore(db);
+    const diagrams = await diagramCore.getDiagramsByUserAndWF('1', 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(diagrams.length).toBeTruthy();
+    expect(diagrams[0].user_id).toEqual('1');
+    expect(diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+  });
+});
