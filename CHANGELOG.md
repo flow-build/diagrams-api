@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/flow-build/diagrams-core/compare/v1.2.0...v1.2.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* adjust diagram2workflow to accept relation N:N ([4b303f7](https://github.com/flow-build/diagrams-core/commit/4b303f79849ea787099dd35c0b9ad09bca79bcf0))
+
 ## [1.2.0](https://github.com/flow-build/diagrams-core/compare/v1.1.0...v1.2.0) (2022-10-19)
 
 
