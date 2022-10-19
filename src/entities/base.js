@@ -56,8 +56,8 @@ class PersistedEntity extends BaseEntity {
     return await this.getPersist().delete(...args);
   }
 
-  static async fetchDiagramIdByWorkflowId(...args) {
-    const serialized = await this.getPersist().getDiagramIdByWorkflowId(...args);
+  static async fetchDiagramIdsByWorkflowId(...args) {
+    const serialized = await this.getPersist().getDiagramIdsByWorkflowId(...args);
     return this.deserialize(serialized);
   }
   

@@ -42,10 +42,10 @@ class DiagramToWorkflowCore {
     return await DiagramToWorkflow.fetchWorkflowIdByDiagramId(diagram_id);
   }
 
-  async getDiagramIdByWorkflowId(workflow_id) {
-    logger.debug('getDiagramIdByWorkflowId service called');
+  async getDiagramIdsByWorkflowId(workflow_id) {
+    logger.debug('getDiagramIdsByWorkflowId service called');
 
-    return await DiagramToWorkflow.fetchDiagramIdByWorkflowId(workflow_id);
+    return await DiagramToWorkflow.fetchDiagramIdsByWorkflowId(workflow_id);
   }
 }
 
