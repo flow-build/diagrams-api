@@ -56,4 +56,18 @@ describe('DiagramToWorkflowCore tests ', () => {
     expect(validate(diagramIdsFetched[0].diagram_id)).toBeTruthy();
     expect(validate(diagramIdsFetched[0].workflow_id)).toBeTruthy();
   });
+
+  test('delete by diagram_id', async () => {
+    const diagramToWorkflowCore = new DiagramToWorkflowCore(db);
+    await diagramToWorkflowCore.deleteByDiagramId(saved_diagram.id);
+    const dataFetched = await diagramToWorkflowCore.getWorkflowIdsByDiagramId(saved_diagram.id);
+    expect(dataFetched.length).not.toBeTruthy();
+  });
+
+  test('delete by workflow_id', async () => {
+    const diagramToWorkflowCore = new DiagramToWorkflowCore(db);
+    await diagramToWorkflowCore.deleteByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    const dataFetched = await diagramToWorkflowCore.getDiagramIdsByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    expect(dataFetched.length).not.toBeTruthy();
+  });
 });

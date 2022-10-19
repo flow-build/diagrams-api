@@ -41,6 +41,18 @@ class WorkflowCore {
 
     return await Workflow.fetch(id);
   }
+
+  async updateWorkflow(id, workflow) {
+    logger.debug('updateWorkflow service called');
+
+    return await Workflow.update(id, workflow);
+  }
+
+  async deleteWorkflow(id) {
+    logger.debug('deleteWorkflow service called');
+
+    return await Workflow.delete(id);
+  }
 }
 
 module.exports = {

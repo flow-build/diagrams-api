@@ -97,6 +97,12 @@ class BlueprintKnexPersist extends KnexPersist {
     await this._db(this._table).insert(blueprint);
     return 'create';
   }
+
+  async update(id, blueprint_spec) {
+    return await this._db(this._table).where('id', id)
+      .update({ blueprint_spec })
+      .returning('*');
+  }
 }
 
 class WorkflowKnexPersist extends KnexPersist {
@@ -107,6 +113,12 @@ class WorkflowKnexPersist extends KnexPersist {
   async save(workflow) {
     await this._db(this._table).insert(workflow);
     return 'create';
+  }
+
+  async update(id, workflow) {
+    return await this._db(this._table).where('id', id)
+      .update({ ...workflow })
+      .returning('*');
   }
 }
 
@@ -126,6 +138,14 @@ class DiagramToWorkflowKnexPersist extends KnexPersist {
 
   async getWorkflowIdsByDiagramId(diagram_id) {
     return await this._db(this._table).select('*').where('diagram_id', diagram_id);
+  }
+
+  async deleteByDiagramId(diagram_id) {
+    return await this._db(this._table).where('diagram_id', diagram_id).del();
+  }
+
+  async deleteByWorkflowId(workflow_id) {
+    return await this._db(this._table).where('workflow_id', workflow_id).del();
   }
 }
 

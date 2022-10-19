@@ -40,6 +40,18 @@ class BlueprintCore {
 
     return await Blueprint.fetch(id);
   }
+
+  async updateBlueprint(id, blueprint_spec) {
+    logger.debug('updateBlueprint service called');
+
+    return await Blueprint.update(id, blueprint_spec);
+  }
+
+  async deleteBlueprint(id) {
+    logger.debug('deleteBlueprint service called');
+
+    return await Blueprint.delete(id);
+  }
 }
 
 module.exports = {
