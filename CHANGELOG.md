@@ -1,3 +1,22 @@
+## [1.2.0](https://github.com/flow-build/diagrams-core/compare/v1.1.0...v1.2.0) (2022-10-19)
+
+
+### Features
+
+* add entity diagramToWorkflow ([17b3dc5](https://github.com/flow-build/diagrams-core/commit/17b3dc58345b5908a0a414f16ce5aad347b74416))
+* add entity workflow ([59532f1](https://github.com/flow-build/diagrams-core/commit/59532f1662603b8df365ac187fb58ebdf0c83eea))
+* add new classes on knex persist ([2f24f87](https://github.com/flow-build/diagrams-core/commit/2f24f879144ea3dda4ea648f61c8d8a06b365101))
+* add new entity blueprint ([7ddeb34](https://github.com/flow-build/diagrams-core/commit/7ddeb344d8a5cfdc00cd114d837378a9f408a35c))
+* add workflow_id on methods to fetch diagrams ([83dee1a](https://github.com/flow-build/diagrams-core/commit/83dee1a93b0f720471ba90757520407329a39bd0))
+* change diagram and base entities to attend new entities ([2fd65fe](https://github.com/flow-build/diagrams-core/commit/2fd65fe2da5efd3107529223accfbba4d8e155e9))
+
+
+### Bug Fixes
+
+* adjust blueprint entity to save only blueprint_spec ([43ee811](https://github.com/flow-build/diagrams-core/commit/43ee8114de4a970172e1e44b19b2fd3da33c95a1))
+* adjust entities to attend new requirements ([398f46a](https://github.com/flow-build/diagrams-core/commit/398f46a663911f15c83a12fa0aa4952ed81c240d))
+* adjust migrations and seeds ([2769173](https://github.com/flow-build/diagrams-core/commit/27691731ba801578063f9ff761cf1509fc4f4286))
+
 ## [1.1.0](https://github.com/flow-build/diagrams-core/compare/v1.0.2...v1.1.0) (2022-10-14)
 
 
