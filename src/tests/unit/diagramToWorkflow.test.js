@@ -35,16 +35,18 @@ describe('DiagramToWorkflow tests', () => {
     expect(saved_diagram_to_workflow.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
 
-  test('fetch workflow by diagram_id', async () => {
-    const fetched_workflow = await DiagramToWorkflow.fetchWorkflowIdByDiagramId(saved_diagram.id);
-    expect(validate(fetched_workflow.diagram_id)).toBeTruthy();
-    expect(fetched_workflow.diagram_id).toEqual(saved_diagram.id);
-    expect(fetched_workflow.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+  test('fetch workflow_ids by diagram_id', async () => {
+    const fetched_workflow_ids = await DiagramToWorkflow.fetchWorkflowIdsByDiagramId(saved_diagram.id);
+    expect(fetched_workflow_ids.length).toBeTruthy();
+    expect(validate(fetched_workflow_ids[0].diagram_id)).toBeTruthy();
+    expect(validate(fetched_workflow_ids[0].workflow_id)).toBeTruthy();
+
   });
 
   test('fetch diagram_ids by workflow_id', async () => {
     const fetched_diagram_ids = await DiagramToWorkflow.fetchDiagramIdsByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(fetched_diagram_ids.length).toBeTruthy();
     expect(validate(fetched_diagram_ids[0].diagram_id)).toBeTruthy();
+    expect(validate(fetched_diagram_ids[0].workflow_id)).toBeTruthy();
   });
 });

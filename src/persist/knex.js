@@ -124,9 +124,8 @@ class DiagramToWorkflowKnexPersist extends KnexPersist {
     return await this._db(this._table).select('*').where('workflow_id', workflow_id);
   }
 
-  async getWorkflowIdByDiagramId(diagram_id) {
-    return await this._db(this._table).select('*').where('diagram_id', diagram_id)
-      .first();
+  async getWorkflowIdsByDiagramId(diagram_id) {
+    return await this._db(this._table).select('*').where('diagram_id', diagram_id);
   }
 }
 
