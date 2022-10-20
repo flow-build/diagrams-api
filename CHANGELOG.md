@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/flow-build/diagrams-core/compare/v1.2.1...v1.3.0) (2022-10-20)
+
+
+### Features
+
+* add methods to update and delete new entities ([f29ba11](https://github.com/flow-build/diagrams-core/commit/f29ba11fe2b9381896181fbcf8d8ed4de691cc80))
+
 ## [1.2.1](https://github.com/flow-build/diagrams-core/compare/v1.2.0...v1.2.1) (2022-10-19)
 
 
