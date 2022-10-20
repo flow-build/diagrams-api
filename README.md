@@ -1,5 +1,7 @@
 # diagrams-core
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=flow-build_diagrams-core&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=flow-build_diagrams-core)
+
 diagrams-core is a BPMN diagrams manager for your project.
 
 ## Installation

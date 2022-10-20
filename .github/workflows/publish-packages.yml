@@ -37,6 +37,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          fetch-depth: 0
       - run: npm ci
       - name: migrations
         run: npm run migrations:local
@@ -44,6 +45,11 @@ jobs:
         run: npm run seeds:local
       - name: tests
         run: npm run test  
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   
   release: 
     needs: build
