@@ -47,6 +47,18 @@ class DiagramToWorkflowCore {
 
     return await DiagramToWorkflow.fetchDiagramIdsByWorkflowId(workflow_id);
   }
+
+  async deleteByDiagramId(diagram_id) {
+    logger.debug('deleteByDiagramId service called');
+
+    return await DiagramToWorkflow.deleteByDiagramId(diagram_id);
+  }
+
+  async deleteByWorkflowId(workflow_id) {
+    logger.debug('deleteByWorkflowId service called');
+
+    return await DiagramToWorkflow.deleteByWorkflowId(workflow_id);
+  }
 }
 
 module.exports = {
