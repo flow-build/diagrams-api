@@ -34,10 +34,11 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          fetch-depth: 0
       - run: npm ci
       - name: migrations
         run: npm run migrations:local
