@@ -1,8 +1,9 @@
 # diagrams-core
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=flow-build_diagrams-core&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=flow-build_diagrams-core)
-
 diagrams-core is a BPMN diagrams manager for your project.
+
+![npm version](https://img.shields.io/npm/v/@flowbuild/diagrams-core) ![language](https://img.shields.io/github/languages/top/flow-build/diagrams-core)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=flow-build_diagrams-core&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=flow-build_diagrams-core) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release) 
 
 ## Installation
 
