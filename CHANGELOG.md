@@ -1,3 +1,10 @@
+## [1.3.1-rc.1](https://github.com/flow-build/diagrams-core/compare/v1.3.0...v1.3.1-rc.1) (2022-10-28)
+
+
+### Bug Fixes
+
+* adjust migrations ([0e5e612](https://github.com/flow-build/diagrams-core/commit/0e5e6127734101d7111480beeadd313e53d75a6b))
+
 ## [1.3.0](https://github.com/flow-build/diagrams-core/compare/v1.2.1...v1.3.0) (2022-10-20)
 
 
