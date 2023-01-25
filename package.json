@@ -35,7 +35,7 @@
   "homepage": "https://github.com/flow-build/diagrams-core#readme",
   "dependencies": {
     "dotenv": "16.0.3",
-    "knex": "2.2.0",
+    "knex": "2.4.0",
     "lodash": "4.17.21",
     "pg": "8.8.0",
     "uuid": "8.3.2",
