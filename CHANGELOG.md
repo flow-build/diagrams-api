@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/flow-build/diagrams-core/compare/v1.3.1...v1.3.2) (2023-01-25)
+
+
+### Bug Fixes
+
+* :lock: fix knex and json5 sec issues ([114ad74](https://github.com/flow-build/diagrams-core/commit/114ad748ae0eee2720eb3856485df9698edb2644))
+
 ## [1.3.1](https://github.com/flow-build/diagrams-core/compare/v1.3.0...v1.3.1) (2022-10-28)
 
 
