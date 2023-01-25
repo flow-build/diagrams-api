@@ -1,3 +1,12 @@
+## [1.4.0](https://github.com/flow-build/diagrams-core/compare/v1.3.2...v1.4.0) (2023-01-25)
+
+
+### Features
+
+* add public diagrams on save ([87c01e1](https://github.com/flow-build/diagrams-core/commit/87c01e10b12519114f3095e989ce4c8c8504f613))
+* allow saving a diagram without a user (public diagram) ([63a9432](https://github.com/flow-build/diagrams-core/commit/63a94320155e33575813c0c9f78287635cf091fa))
+* save blueprint_id when saving a diagram ([e47b30c](https://github.com/flow-build/diagrams-core/commit/e47b30c61f4d5337323e413e0a5c1917363e725f))
+
 ## [1.3.2](https://github.com/flow-build/diagrams-core/compare/v1.3.1...v1.3.2) (2023-01-25)
 
 
