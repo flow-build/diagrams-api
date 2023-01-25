@@ -70,14 +70,14 @@ describe('Diagram tests (without workflow_id)', () => {
 describe('Diagram tests (with workflow_id)', () => {
 
   test('getDiagramsByWorkflowId', async () => {
-    const fetched_diagrams = await Diagram.fetchByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    const fetched_diagrams = await Diagram.fetchByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f', '1');
     expect(fetched_diagrams.length).toBeTruthy();
     expect(fetched_diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(fetched_diagrams[0].name).toEqual('Example Diagram');
   });
 
   test('getLatestDiagramByWorkflowId', async () => {
-    const fetched_diagram = await Diagram.fetchLatestByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    const fetched_diagram = await Diagram.fetchLatestByWorkflowId('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f', '1');
     expect(fetched_diagram.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     expect(fetched_diagram.name).toEqual('Example Diagram');
   });
