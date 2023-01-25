@@ -44,6 +44,7 @@ class DiagramCore {
     let blueprint;
     if(workflow_data) {
       if(workflow_data.blueprint_spec) {
+        //TODO: verify whether the blueprint_spec already exists in the database
         blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)        
         await Diagram.update(diagram.id, { blueprint_id: blueprint.id })
       }
