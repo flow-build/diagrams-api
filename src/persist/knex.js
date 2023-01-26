@@ -133,8 +133,14 @@ class BlueprintKnexPersist extends KnexPersist {
   }
 
   async save(blueprint) {
-    await this._db(this._table).insert(blueprint);
-    return "create";
+    let result;
+    result = await this._db(this._table).where('blueprint_spec', blueprint.blueprint_spec);
+    if(result.length === 0) {
+      const insertResult = await this._db(this._table).insert(blueprint).returning('*');
+      return insertResult[0]
+    } else {
+      return result[0];
+    }
   }
 
   async update(id, blueprint_spec) {
@@ -148,7 +154,11 @@ class WorkflowKnexPersist extends KnexPersist {
   }
 
   async save(workflow) {
-    await this._db(this._table).insert(workflow);
+    //TODO: workflow.id is not unique. The same id can appear on different servers. Need to adjust the migrations to set the unique key to id + server.
+    const existing = await this.get(workflow.id)
+    if(!existing) {
+      await this._db(this._table).insert(workflow);  
+    }
     return "create";
   }
 

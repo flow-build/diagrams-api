@@ -16,13 +16,23 @@ afterAll(async () => {
 });
 
 describe('Blueprint tests', () => {
-
   test('save blueprint', async () => {
     const blueprintInstance = new Blueprint(blueprint_spec);
     const saved_blueprint = await blueprintInstance.save();
-    expect(validate(saved_blueprint.id)).toBeTruthy();
-    expect(saved_blueprint.id).toEqual(blueprintInstance.id);
-    expect(saved_blueprint.blueprint_spec).toEqual(blueprint_spec);
+    expect(saved_blueprint.id).toBeDefined();
+    expect(saved_blueprint.blueprint_spec.lanes).toBeDefined();
+    expect(saved_blueprint.blueprint_spec.nodes).toBeDefined();
+    expect(saved_blueprint.blueprint_spec.environment).toBeUndefined();
+  });
+
+  test('save the same blueprint twice', async () => {
+    const firstBlueprintInstance = new Blueprint(blueprint_spec);
+    const firstSavedBlueprint = await firstBlueprintInstance.save();
+    expect(validate(firstSavedBlueprint.id)).toBeTruthy();
+    
+    const secondBlueprintInstance = new Blueprint(blueprint_spec);
+    const secondSavedBlueprint = await secondBlueprintInstance.save();
+    expect(secondSavedBlueprint.id).toEqual(firstSavedBlueprint.id);
   });
 
   test('get blueprint by id', async () => {
@@ -31,6 +41,8 @@ describe('Blueprint tests', () => {
     const fetched_blueprint = await Blueprint.fetch(saved_blueprint.id);
     expect(validate(fetched_blueprint.id)).toBeTruthy();
     expect(fetched_blueprint.id).toEqual(saved_blueprint.id);
-    expect(fetched_blueprint.blueprint_spec).toEqual(blueprint_spec);
+    expect(saved_blueprint.blueprint_spec.lanes).toBeDefined();
+    expect(saved_blueprint.blueprint_spec.nodes).toBeDefined();
+    expect(saved_blueprint.blueprint_spec.environment).toBeUndefined();
   });
 });

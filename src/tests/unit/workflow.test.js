@@ -17,7 +17,7 @@ afterAll(async () => {
 
 describe('Workflow tests', () => {
 
-  test('save workflow', async () => {
+  test('save workflow once', async () => {
     const workflowInstance = new Workflow('325c80a7-35c4-4af9-83b0-58e40af88b05',
       'http://localhost:3000', '42a9a60e-e2e5-4d21-8e2f-67318b100e38');
     const saved_workflow = await workflowInstance.save();
@@ -26,6 +26,19 @@ describe('Workflow tests', () => {
     expect(saved_workflow.server).toEqual('http://localhost:3000');
     expect(saved_workflow.blueprint_id).toEqual('42a9a60e-e2e5-4d21-8e2f-67318b100e38');
   });
+
+  test('save workflow twice', async () => {
+    const firstWorkflowInstance = new Workflow('325c80a7-35c4-4af9-83b0-58e40af88b05',
+      'http://localhost:3000', '42a9a60e-e2e5-4d21-8e2f-67318b100e38');
+    const firstSavedWorkflow = await firstWorkflowInstance.save();
+    expect(validate(firstSavedWorkflow.id)).toBeTruthy();
+    
+    const secondWorkflowInstance = new Workflow('325c80a7-35c4-4af9-83b0-58e40af88b05',
+      'http://localhost:3000', '42a9a60e-e2e5-4d21-8e2f-67318b100e38');
+    const secondSavedWorkflow = await secondWorkflowInstance.save();
+    expect(validate(secondSavedWorkflow.id)).toBeTruthy();
+    expect(secondSavedWorkflow.id).toEqual(firstSavedWorkflow.id)
+  })
 
   test('fetch workflow by id', async () => {
     const fetched_workflow = await Workflow.fetch('325c80a7-35c4-4af9-83b0-58e40af88b05');
