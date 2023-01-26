@@ -1,3 +1,15 @@
+## [1.5.0](https://github.com/flow-build/diagrams-core/compare/v1.4.0...v1.5.0) (2023-01-26)
+
+
+### Features
+
+* verify whether the blueprint exists before saving ([3f68c0b](https://github.com/flow-build/diagrams-core/commit/3f68c0ba5aa2129f6b676829b418e7b3f9e49be1))
+
+
+### Bug Fixes
+
+* prevent the same workflow from be saved twice ([96115b7](https://github.com/flow-build/diagrams-core/commit/96115b7080592c2757214606a96269d70ba17645))
+
 ## [1.4.0](https://github.com/flow-build/diagrams-core/compare/v1.3.2...v1.4.0) (2023-01-25)
 
 
