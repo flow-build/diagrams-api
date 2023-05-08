@@ -8,7 +8,6 @@ exports.up = function (knex) {
     table.uuid("blueprint_id").notNullable();
     table.foreign("server_id").references("server.id").onDelete("CASCADE");
     table.foreign("blueprint_id").references("blueprint.id").onDelete("CASCADE");
-    table.primary(["id", "server_id"]);
   });
 };
 

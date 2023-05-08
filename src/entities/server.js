@@ -23,7 +23,7 @@ class Server extends PersistedEntity {
     return {
       id: data.id,
       url: data.url,
-      event_broker: data.event_broker,
+      config: data.config,
       last_sync: data.last_sync,
     }
   }
@@ -32,16 +32,16 @@ class Server extends PersistedEntity {
     return {
       id: server.id,
       url: server.url,
-      event_broker: server.event_broker,
+      config: server.config,
     }
   }
 
-  constructor(url, event_broker = null) {
+  constructor(url, config = null) {
     super();
 
     this.id = uuid();
     this.url = url;
-    this.event_broker = event_broker;
+    this.config = config;
   }
 
 }

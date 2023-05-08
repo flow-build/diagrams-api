@@ -18,7 +18,7 @@ describe('Server tests', () => {
     const serverInstance = new Server('https://flowbuild-homolog.com', { namespace: 'homolog' });
     const saved_server = await serverInstance.save();
     expect(saved_server.id).toBeDefined();
-    expect(saved_server.event_broker.namespace).toEqual('homolog');
+    expect(saved_server.config.namespace).toEqual('homolog');
   });
 
   test('error trying to save the same url twice', async () => {

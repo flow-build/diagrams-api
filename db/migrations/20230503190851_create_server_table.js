@@ -3,7 +3,7 @@ exports.up = function (knex) {
     table.uuid("id").primary();
     table.timestamps(true, true);
     table.string("url", 255).notNullable().unique();
-    table.jsonb("event_broker").nullable();
+    table.jsonb("config").nullable();
     table.timestamp("last_sync").nullable();
   });
 };

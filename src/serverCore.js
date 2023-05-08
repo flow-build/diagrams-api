@@ -31,9 +31,9 @@ class ServerCore {
 
   async saveServer(data_obj) {
     logger.debug('saveServer service called');
-    const { url, event_broker } = data_obj;
+    const { url, config } = data_obj;
 
-    return await new Server(url, event_broker).save();
+    return await new Server(url, config).save();
   }
 
   async getAllServers() {
