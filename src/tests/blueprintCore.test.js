@@ -1,6 +1,5 @@
 const { BlueprintCore } = require('../blueprintCore');
-const { WorkflowCore } = require('../workflowCore');
-const { DiagramCore } = require('../diagramCore');
+const { WorkflowCore, DiagramCore } = require('../../index');
 const { Blueprint } = require('../entities/blueprint');
 const { Diagram } = require('../entities/diagram');
 const { Workflow } = require('../entities/workflow');

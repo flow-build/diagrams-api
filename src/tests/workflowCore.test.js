@@ -1,5 +1,5 @@
 const { Workflow } = require('../entities/workflow');
-const { WorkflowCore } = require('../workflowCore');
+const { WorkflowCore } = require('../../index');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../persist/provider");
 const { db } = require('../utils/db');

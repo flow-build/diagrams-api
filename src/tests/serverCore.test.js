@@ -1,5 +1,5 @@
 const { Server } = require('../entities/server');
-const { ServerCore } = require('../serverCore');
+const { ServerCore } = require('../../index');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../persist/provider");
 const { db } = require('../utils/db');

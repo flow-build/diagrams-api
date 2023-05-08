@@ -1,6 +1,6 @@
 const { v4: uuid } = require('uuid'); 
 const { Diagram } = require('../entities/diagram');
-const { DiagramCore } = require('../diagramCore');
+const { DiagramCore } = require('../../index');
 const { validate } = require('uuid');
 const { PersistorProvider } = require("../persist/provider");
 const diagramExample = require('fs').readFileSync('./examples/diagram.xml', 'utf8');
