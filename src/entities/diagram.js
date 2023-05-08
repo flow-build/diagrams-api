@@ -46,7 +46,12 @@ class Diagram extends PersistedEntity {
     }
   }
 
-  constructor(name, user_id, diagram_xml, blueprint_id = null, user_default = null) {
+  static async unsetDefault(...args) {
+    await this.getPersist().unsetDefault(...args);
+    return true;
+  }
+
+  constructor(name, user_id, diagram_xml, blueprint_id = null, user_default = false) {
     super();
 
     this.id = uuid();
@@ -54,7 +59,7 @@ class Diagram extends PersistedEntity {
     this.user_id = user_id;
     this.diagram_xml = diagram_xml;
     this.blueprint_id = blueprint_id;
-    this.user_default = user_default || false;
+    this.user_default = user_default;
   }
 
 }
