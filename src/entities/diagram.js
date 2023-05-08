@@ -22,14 +22,16 @@ class Diagram extends PersistedEntity {
   static _deserialized(data) {
     return {
       id: data.id,
-      name: data.name,
-      blueprint_id: data.blueprint_id,
-      aligned: data.aligned,
-      user_id: data.user_id,
-      diagram_xml: data.diagram_xml,
       created_at: data.created_at,
       updated_at: data.updated_at,
-      workflow_id: data.workflow_id
+      name: data.name,
+      diagram_xml: data.diagram_xml,
+      blueprint_id: data.blueprint_id,
+      user_id: data.user_id,
+      is_public: data.is_public,
+      user_default: data.user_default,
+      is_aligned: data.is_aligned,
+      workflow_id: data.workflow_id,
     }
   }
 
@@ -37,21 +39,24 @@ class Diagram extends PersistedEntity {
     return {
       id: diagram.id,
       name: diagram.name,
-      user_id: diagram.user_id,
       diagram_xml: diagram.diagram_xml,
       blueprint_id: diagram.blueprint_id,
-      aligned: diagram.aligned
+      user_id: diagram.user_id,
+      user_default: diagram.user_default,
+      is_public: diagram.is_public,
+      is_aligned: diagram.is_aligned,
     }
   }
 
-  constructor(name, user_id, diagram_xml, blueprint_id = null) {
+  constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null) {
     super();
 
     this.id = uuid();
     this.name = name;
     this.user_id = user_id;
     this.diagram_xml = diagram_xml;
-    this.blueprint_id = blueprint_id
+    this.blueprint_id = blueprint_id;
+    this.is_public = is_public;
   }
 
 }
