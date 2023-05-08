@@ -98,10 +98,10 @@ class DiagramCore {
   }
 
 
-  async getLatestDiagramByWorkflowId(workflow_id, user_id = null) {
+  async getLatestDiagramByWorkflowId(workflow_id) {
     logger.debug('getLatestDiagramByWorkflowId service called');
   
-    return await Diagram.fetchLatestByWorkflowId(workflow_id, user_id);
+    return await Diagram.fetchLatestByWorkflowId(workflow_id);
   }
 
   async getDiagramsByUserAndWF(user_id, workflow_id) {

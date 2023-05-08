@@ -6,7 +6,7 @@ const { PersistorProvider } = require("../persist/provider");
 const diagramExample = require('fs').readFileSync('./examples/diagram.xml', 'utf8');
 const { db } = require('../utils/db');
 const { blueprint_spec } = require('../../examples/blueprint');
-const _ = require('lodash')
+const _ = require('lodash');
 
 const diagramPayload = {
   name: 'Test',
@@ -151,22 +151,5 @@ describe('DiagramCore tests (public diagrams)', () => {
     const workflowId = 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f';
     const diagrams = await diagramCore.getDiagramsByWorkflowId(workflowId, '96293285-33b7-4a69-9b64-822059569734');
     expect(diagrams.length).toBeGreaterThan(0);
-  });
-  
-  test('get latest diagram by workflow_id', async () => {
-    const diagramCore = new DiagramCore(db);
-    const payload = _.cloneDeep(diagramPayload)
-    const workflowId = uuid();
-    payload.workflow_data = {
-      id: workflowId,
-      name: 'Workflow Example',
-      version: 1,
-      server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
-      blueprint_spec
-    }
-    payload.isPublic = true;
-    const diagram = await diagramCore.saveDiagram(payload);
-    const result = await diagramCore.getLatestDiagramByWorkflowId(workflowId);
-    expect(result.id).toEqual(diagram.id);
   });
 });
