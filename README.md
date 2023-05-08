@@ -21,6 +21,8 @@ const diagramCore = new DiagramCore(db);
 // note that 'db' has to be a database configuration
 ```
 
+The service does have a blueprint storage, but it only stores the data relevant to the diagram, a.k.a. nodes and lanes (prepare, environment and parameters are discarded).  
+
 ## Environment variables
 
 Add a .env file with the following variables:

@@ -1,3 +1,31 @@
+## [1.5.0](https://github.com/flow-build/diagrams-core/compare/v1.4.0...v1.5.0) (2023-01-26)
+
+
+### Features
+
+* verify whether the blueprint exists before saving ([3f68c0b](https://github.com/flow-build/diagrams-core/commit/3f68c0ba5aa2129f6b676829b418e7b3f9e49be1))
+
+
+### Bug Fixes
+
+* prevent the same workflow from be saved twice ([96115b7](https://github.com/flow-build/diagrams-core/commit/96115b7080592c2757214606a96269d70ba17645))
+
+## [1.4.0](https://github.com/flow-build/diagrams-core/compare/v1.3.2...v1.4.0) (2023-01-25)
+
+
+### Features
+
+* add public diagrams on save ([87c01e1](https://github.com/flow-build/diagrams-core/commit/87c01e10b12519114f3095e989ce4c8c8504f613))
+* allow saving a diagram without a user (public diagram) ([63a9432](https://github.com/flow-build/diagrams-core/commit/63a94320155e33575813c0c9f78287635cf091fa))
+* save blueprint_id when saving a diagram ([e47b30c](https://github.com/flow-build/diagrams-core/commit/e47b30c61f4d5337323e413e0a5c1917363e725f))
+
+## [1.3.2](https://github.com/flow-build/diagrams-core/compare/v1.3.1...v1.3.2) (2023-01-25)
+
+
+### Bug Fixes
+
+* :lock: fix knex and json5 sec issues ([114ad74](https://github.com/flow-build/diagrams-core/commit/114ad748ae0eee2720eb3856485df9698edb2644))
+
 ## [1.3.1](https://github.com/flow-build/diagrams-core/compare/v1.3.0...v1.3.1) (2022-10-28)
 
 

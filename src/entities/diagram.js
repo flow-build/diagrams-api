@@ -44,13 +44,14 @@ class Diagram extends PersistedEntity {
     }
   }
 
-  constructor(name, user_id, diagram_xml) {
+  constructor(name, user_id, diagram_xml, blueprint_id = null) {
     super();
 
     this.id = uuid();
     this.name = name;
     this.user_id = user_id;
     this.diagram_xml = diagram_xml;
+    this.blueprint_id = blueprint_id
   }
 
 }
