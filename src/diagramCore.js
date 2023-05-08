@@ -36,34 +36,45 @@ class DiagramCore {
     logger.debug('saveDiagram service called');
     const { name, user_id, diagram_xml, workflow_data, isPublic } = diagram_obj;
     let userId;
-    if(!isPublic) {
+    if (!isPublic) {
       userId = user_id
     }
     const diagram = await new Diagram(name, userId, diagram_xml).save();
 
     let blueprint;
-    if(workflow_data) {
-      if(workflow_data.blueprint_spec) {
+    if (workflow_data) {
+      if (workflow_data.blueprint_spec) {
         //TODO: verify whether the blueprint_spec already exists in the database
-        blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)        
+        blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)
         await Diagram.update(diagram.id, { blueprint_id: blueprint.id })
       }
-      if(workflow_data.id) {
+      if (workflow_data.id) {
         const workflow = await new WorkflowCore(this._db).saveWorkflow({ id: workflow_data.id, server: workflow_data.server, blueprint_id: blueprint.id })
         await new DiagramToWorkflowCore(this._db).saveDiagramToWorkflow({ diagram_id: diagram.id, workflow_id: workflow_data.id })
         const response = await Diagram.fetch(diagram.id);
         delete response.diagram_xml;
         return { ...response, ...{ workflow_id: workflow.id, server: workflow.server } }
-      }      
-    } 
-    
+      }
+    }
+
     return diagram;
-    
+
+  }
+
+  async setAsDefault(id) {
+    logger.debug('setAsDefault service called');
+
+    const diagram = await Diagram.fetch(id);
+    if (diagram) {
+      diagram.user_default = true;
+      return await Diagram.update(id, { ...diagram });
+    }
+    throw new Error('Diagram not found')
   }
 
   async getAllDiagrams() {
     logger.debug('getAllDiagrams service called');
-  
+
     return await Diagram.fetchAll();
   }
 
@@ -88,13 +99,13 @@ class DiagramCore {
 
   async getLatestDiagramByWorkflowId(workflow_id, user_id = null) {
     logger.debug('getLatestDiagramByWorkflowId service called');
-  
+
     return await Diagram.fetchLatestByWorkflowId(workflow_id, user_id);
   }
 
   async getDiagramsByUserAndWF(user_id, workflow_id) {
     logger.debug('getDiagramsByUserAndWF service called');
-  
+
     return await Diagram.fetchByUserAndWF(user_id, workflow_id);
   }
 
