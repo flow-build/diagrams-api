@@ -54,7 +54,7 @@ describe('Diagram tests (without workflow_id)', () => {
     });
     expect(updated_diagram.blueprint_id).toEqual('42a9a60e-e2e5-4d21-8e2f-67318b100e38');
     expect(updated_diagram.name).toEqual('Update Diagram Test');
-    expect(updated_diagram.aligned).toBeFalsy();
+    expect(updated_diagram.is_aligned).toBeFalsy();
   });
 
   test('deleteDiagram', async () => {

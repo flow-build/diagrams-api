@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable("server", (table) => {
     table.uuid("id").primary();
     table.timestamps(true, true);
-    table.string("url", 255).notNullable();
+    table.string("url", 255).notNullable().unique();
     table.jsonb("event_broker").nullable();
     table.timestamp("last_sync").nullable();
   });
