@@ -1,9 +1,10 @@
+const { v4: uuid } = require('uuid'); 
 const { PersistedEntity } = require('./base');
 const _ = require('lodash');
 
-class DiagramToWorkflow extends PersistedEntity {
+class Server extends PersistedEntity {
   static getEntityClass() {
-    return DiagramToWorkflow;
+    return Server;
   }
 
   static deserialize(serialized) {
@@ -20,27 +21,31 @@ class DiagramToWorkflow extends PersistedEntity {
 
   static _deserialized(data) {
     return {
-      diagram_id: data.diagram_id,
-      workflow_id: data.workflow_id
+      id: data.id,
+      url: data.url,
+      config: data.config,
+      last_sync: data.last_sync,
     }
   }
 
-  static serialize(diagramToWorkflow) {
+  static serialize(server) {
     return {
-      diagram_id: diagramToWorkflow.diagram_id,
-      workflow_id: diagramToWorkflow.workflow_id
+      id: server.id,
+      url: server.url,
+      config: server.config,
     }
   }
 
-  constructor(diagram_id, workflow_id) {
+  constructor(url, config = null) {
     super();
 
-    this.diagram_id = diagram_id;
-    this.workflow_id = workflow_id;
+    this.id = uuid();
+    this.url = url;
+    this.config = config;
   }
 
 }
 
 module.exports = {
-  DiagramToWorkflow
+  Server
 }

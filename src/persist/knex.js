@@ -1,7 +1,7 @@
 const { Diagram } = require("../entities/diagram");
 const { Blueprint } = require("../entities/blueprint");
 const { Workflow } = require("../entities/workflow");
-const { DiagramToWorkflow } = require("../entities/diagramToWorkflow");
+const { Server } = require("../entities/server");
 
 class KnexPersist {
   constructor(db, class_, table) {
@@ -21,24 +21,24 @@ class KnexPersist {
 
 class DiagramKnexPersist extends KnexPersist {
   constructor(db) {
-    super(db, Diagram, "diagrams");
+    super(db, Diagram, "diagram");
   }
 
   async getAll() {
-    const diagram_to_workflow = new DiagramToWorkflowKnexPersist(this._db);
+    const workflow = new WorkflowKnexPersist(this._db);
     return await this._db(this._table)
+      .leftJoin(workflow._table, `${workflow._table}.blueprint_id`, `${this._table}.blueprint_id`)
       .select(
-        "id",
-        "name",
+        "diagram.id",
+        "diagram.name",
         "diagram_xml",
-        "blueprint_id",
-        "user_id",
-        "created_at",
-        "updated_at",
-        "aligned",
-        "workflow_id"
+        "diagram.blueprint_id",
+        "diagram.user_id",
+        "diagram.created_at",
+        "diagram.updated_at",
+        "is_aligned",
+        "workflow.id as worflow_id",
       )
-      .leftJoin(diagram_to_workflow._table, `${diagram_to_workflow._table}.diagram_id`, `${this._table}.id`)
       .orderBy("updated_at", "desc");
   }
 
@@ -55,89 +55,83 @@ class DiagramKnexPersist extends KnexPersist {
   }
 
   async delete(id) {
-    const diagram_to_workflow = new DiagramToWorkflowKnexPersist(this._db);
-    await this._db(diagram_to_workflow._table).where("diagram_id", id).del();
     await this._db(this._table).where("id", id).del();
   }
 
   async getByUserId(user_id) {
-    const diagram_to_workflow = new DiagramToWorkflowKnexPersist(this._db);
+    const workflow = new WorkflowKnexPersist(this._db);
     return await this._db(this._table)
+      .leftJoin(workflow._table, `${workflow._table}.blueprint_id`, `${this._table}.blueprint_id`)
       .select(
-        "id",
-        "name",
+        "diagram.id",
+        "diagram.name",
         "diagram_xml",
-        "blueprint_id",
-        "user_id",
-        "created_at",
-        "updated_at",
-        "aligned",
-        "workflow_id"
+        "diagram.blueprint_id",
+        "diagram.user_id",
+        "diagram.created_at",
+        "diagram.updated_at",
+        "is_aligned",
+        "workflow.id as workflow_id"
       )
-      .leftJoin(diagram_to_workflow._table, `${diagram_to_workflow._table}.diagram_id`, `${this._table}.id`)
-      .whereNull("user_id")
-      .orWhere("user_id", user_id)
-      .orderBy("updated_at", "desc");
+      .where("user_id", user_id)
+      .orderBy("diagram.updated_at", "desc");
   }
 
-  async getByWorkflowId(workflow_id, user_id = null) {
-    const diagram_to_workflow = new DiagramToWorkflowKnexPersist(this._db);
+  async getByWorkflowId(workflow_id) {
+    const workflow = new WorkflowKnexPersist(this._db);
     return await this._db(this._table)
+      .leftJoin(workflow._table, `${workflow._table}.blueprint_id`, `${this._table}.blueprint_id`)
       .select(
-        "id",
-        "name",
+        "diagram.id",
+        "diagram.name",
         "diagram_xml",
-        "blueprint_id",
+        "diagram.blueprint_id",
         "user_id",
-        "created_at",
-        "updated_at",
-        "aligned",
-        "workflow_id"
+        "diagram.created_at",
+        "diagram.updated_at",
+        "is_aligned",
+        "workflow.id as workflow_id"
       )
-      .join(diagram_to_workflow._table, `${diagram_to_workflow._table}.diagram_id`, `${this._table}.id`)
-      .where("workflow_id", workflow_id)
-      .whereNull("user_id")
-      .orWhere({ user_id: user_id, workflow_id: workflow_id })
-      .orderBy("updated_at", "desc");
+      .where("workflow.id", workflow_id)
+      .orderBy("diagram.updated_at", "desc");
   }
 
-  async getLatestByWorkflowId(workflow_id, user_id = null) {
-    const workflows = await this.getByWorkflowId(workflow_id, user_id)
-    return workflows[0]
+  async getLatestByWorkflowId(workflow_id) {
+    const workflows = await this.getByWorkflowId(workflow_id);
+    return workflows[0];
   }
 
   async getByUserAndWF(user_id, workflow_id) {
-    const diagram_to_workflow = new DiagramToWorkflowKnexPersist(this._db);
+    const workflow = new WorkflowKnexPersist(this._db);
     return await this._db(this._table)
+      .leftJoin(workflow._table, `${workflow._table}.blueprint_id`, `${this._table}.blueprint_id`)
       .select(
-        "id",
-        "name",
+        "diagram.id",
+        "diagram.name",
         "diagram_xml",
-        "blueprint_id",
+        "diagram.blueprint_id",
         "user_id",
-        "created_at",
-        "updated_at",
-        "aligned",
-        "workflow_id"
+        "diagram.created_at",
+        "diagram.updated_at",
+        "is_aligned",
+        "workflow.id as workflow_id"
       )
-      .join(diagram_to_workflow._table, `${diagram_to_workflow._table}.diagram_id`, `${this._table}.id`)
-      .where("workflow_id", workflow_id)
-      .andWhere("user_id", user_id)
-      .orderBy("updated_at", "desc");
+      .where({ user_id: user_id, "workflow.id": workflow_id })
+      .orderBy("diagram.updated_at", "desc");
   }
 }
 
 class BlueprintKnexPersist extends KnexPersist {
   constructor(db) {
-    super(db, Blueprint, "blueprints");
+    super(db, Blueprint, "blueprint");
   }
 
   async save(blueprint) {
     let result;
     result = await this._db(this._table).where('blueprint_spec', blueprint.blueprint_spec);
-    if(result.length === 0) {
+    if (result.length === 0) {
       const insertResult = await this._db(this._table).insert(blueprint).returning('*');
-      return insertResult[0]
+      return insertResult[0];
     } else {
       return result[0];
     }
@@ -150,15 +144,11 @@ class BlueprintKnexPersist extends KnexPersist {
 
 class WorkflowKnexPersist extends KnexPersist {
   constructor(db) {
-    super(db, Workflow, "workflows");
+    super(db, Workflow, "workflow");
   }
 
   async save(workflow) {
-    //TODO: workflow.id is not unique. The same id can appear on different servers. Need to adjust the migrations to set the unique key to id + server.
-    const existing = await this.get(workflow.id)
-    if(!existing) {
-      await this._db(this._table).insert(workflow);  
-    }
+    await this._db(this._table).insert(workflow);  
     return "create";
   }
 
@@ -170,30 +160,14 @@ class WorkflowKnexPersist extends KnexPersist {
   }
 }
 
-class DiagramToWorkflowKnexPersist extends KnexPersist {
+class ServerKnexPersist extends KnexPersist {
   constructor(db) {
-    super(db, DiagramToWorkflow, "diagram_to_workflow");
+    super(db, Server, "server");
   }
 
-  async save(workflow) {
-    await this._db(this._table).insert(workflow);
+  async save(server) {
+    await this._db(this._table).insert(server);
     return "create";
-  }
-
-  async getDiagramIdsByWorkflowId(workflow_id) {
-    return await this._db(this._table).select("*").where("workflow_id", workflow_id);
-  }
-
-  async getWorkflowIdsByDiagramId(diagram_id) {
-    return await this._db(this._table).select("*").where("diagram_id", diagram_id);
-  }
-
-  async deleteByDiagramId(diagram_id) {
-    return await this._db(this._table).where("diagram_id", diagram_id).del();
-  }
-
-  async deleteByWorkflowId(workflow_id) {
-    return await this._db(this._table).where("workflow_id", workflow_id).del();
   }
 }
 
@@ -201,5 +175,5 @@ module.exports = {
   DiagramKnexPersist,
   BlueprintKnexPersist,
   WorkflowKnexPersist,
-  DiagramToWorkflowKnexPersist,
+  ServerKnexPersist,
 };

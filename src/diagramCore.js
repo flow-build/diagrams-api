@@ -2,7 +2,6 @@ const { logger } = require('./utils/logger');
 const { PersistorProvider } = require('./persist/provider');
 const { Diagram } = require('./entities/diagram');
 const { BlueprintCore } = require('./blueprintCore');
-const { DiagramToWorkflowCore } = require('./diagramToWorkflowCore');
 const { WorkflowCore } = require('./workflowCore');
 
 class DiagramCore {
@@ -39,21 +38,34 @@ class DiagramCore {
     if(!isPublic) {
       userId = user_id
     }
-    const diagram = await new Diagram(name, userId, diagram_xml).save();
+    const diagram = await new Diagram(name, diagram_xml, userId).save();
 
     let blueprint;
     if(workflow_data) {
       if(workflow_data.blueprint_spec) {
-        //TODO: verify whether the blueprint_spec already exists in the database
         blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)        
         await Diagram.update(diagram.id, { blueprint_id: blueprint.id })
       }
       if(workflow_data.id) {
-        const workflow = await new WorkflowCore(this._db).saveWorkflow({ id: workflow_data.id, server: workflow_data.server, blueprint_id: blueprint.id })
-        await new DiagramToWorkflowCore(this._db).saveDiagramToWorkflow({ diagram_id: diagram.id, workflow_id: workflow_data.id })
+        const workflow = await new WorkflowCore(this._db).saveWorkflow({
+          id: workflow_data.id,
+          name: workflow_data.name,
+          version: workflow_data.version,
+          server_id: workflow_data.server_id,
+          blueprint_id: blueprint.id 
+        })
         const response = await Diagram.fetch(diagram.id);
         delete response.diagram_xml;
-        return { ...response, ...{ workflow_id: workflow.id, server: workflow.server } }
+        return { 
+          ...response,
+          ...{
+            workflow_id: workflow.id,
+            workflow_name: workflow.name,
+            version: workflow.version,
+            server_id: workflow.server_id,
+            blueprint_id: workflow.blueprint_id 
+          }
+        }
       }      
     } 
     
@@ -86,10 +98,10 @@ class DiagramCore {
   }
 
 
-  async getLatestDiagramByWorkflowId(workflow_id, user_id = null) {
+  async getLatestDiagramByWorkflowId(workflow_id) {
     logger.debug('getLatestDiagramByWorkflowId service called');
   
-    return await Diagram.fetchLatestByWorkflowId(workflow_id, user_id);
+    return await Diagram.fetchLatestByWorkflowId(workflow_id);
   }
 
   async getDiagramsByUserAndWF(user_id, workflow_id) {

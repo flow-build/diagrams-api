@@ -4,7 +4,7 @@
   "description": "BPMN diagrams manager",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --runInBand",
     "lint": "eslint ./src --ext .js --max-warnings=0",
     "lint:fix": "eslint ./src --ext .js --max-warnings=0 --fix",
     "migrations": "knex --env ${KNEX_ENV} --knexfile knexfile.js migrate:latest",
@@ -37,9 +37,8 @@
     "dotenv": "16.0.3",
     "knex": "2.4.2",
     "lodash": "4.17.21",
-    "npm": "9.3.1",
-    "pg": "8.8.0",
-    "uuid": "8.3.2",
+    "pg": "8.10.0",
+    "uuid": "9.0.0",
     "winston": "3.8.2"
   },
   "devDependencies": {

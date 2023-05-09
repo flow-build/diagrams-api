@@ -21,7 +21,9 @@ class Workflow extends PersistedEntity {
   static _deserialized(data) {
     return {
       id: data.id,
-      server: data.server,
+      name: data.name,
+      version: data.version,
+      server_id: data.server_id,
       blueprint_id: data.blueprint_id
     }
   }
@@ -29,17 +31,21 @@ class Workflow extends PersistedEntity {
   static serialize(workflow) {
     return {
       id: workflow.id,
-      server: workflow.server,
+      name: workflow.name,
+      version: workflow.version,
+      server_id: workflow.server_id,
       blueprint_id: workflow.blueprint_id
     }
   }
 
-  constructor(id, server, blueprint_id) {
+  constructor(id, name, version, blueprint_id, server_id) {
     super();
 
     this.id = id;
-    this.server = server;
+    this.name = name;
+    this.version = version;
     this.blueprint_id = blueprint_id;
+    this.server_id = server_id;
   }
 
 }
