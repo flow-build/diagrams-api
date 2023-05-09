@@ -1,3 +1,11 @@
+## [1.6.0-rc.1](https://github.com/flow-build/diagrams-core/compare/v1.5.0...v1.6.0-rc.1) (2023-05-09)
+
+
+### Features
+
+* add server entity ([135bbe9](https://github.com/flow-build/diagrams-core/commit/135bbe92fd03a2a31d2506cd9d859ffec88dc306))
+* update entities for new database model ([5798630](https://github.com/flow-build/diagrams-core/commit/57986303b7d5490e45d82bccfe3c8d1579a8f689))
+
 ## [1.5.0](https://github.com/flow-build/diagrams-core/compare/v1.4.0...v1.5.0) (2023-01-26)
 
 
