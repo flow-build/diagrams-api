@@ -48,9 +48,10 @@ class Diagram extends PersistedEntity {
     }
   }
 
-  static async unsetDefault(...args) {
-    await this.getPersist().unsetDefault(...args);
-    return true;
+  static async setDefault(...args) {
+    const { rows } = await this.getPersist().setDefault(...args);
+    const default_ = rows.find(r => r.user_default === true);
+    return this.deserialize(default_);
   }
 
   constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null, user_default = false) {

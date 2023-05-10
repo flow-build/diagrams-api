@@ -81,9 +81,7 @@ class DiagramCore {
 
     const diagram = await Diagram.fetch(id);
     if (diagram) {
-      await Diagram.unsetDefault({ exception: id, user_id: diagram.user_id });
-      diagram.user_default = true;
-      return await Diagram.update(id, { ...diagram });
+      return await Diagram.setDefault({ id, user_id: diagram.user_id });
     }
     throw new Error('Diagram not found')
   }
