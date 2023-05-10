@@ -1,4 +1,4 @@
-const { v4: uuid } = require('uuid'); 
+const { v4: uuid } = require('uuid');
 const { PersistedEntity } = require('./base');
 const _ = require('lodash');
 
@@ -11,7 +11,7 @@ class Diagram extends PersistedEntity {
     if (!serialized) {
       return;
     }
-    
+
     if (_.isArray(serialized)) {
       return serialized.map((data) => this._deserialized(data));
     } else {
@@ -48,7 +48,12 @@ class Diagram extends PersistedEntity {
     }
   }
 
-  constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null) {
+  static async unsetDefault(...args) {
+    await this.getPersist().unsetDefault(...args);
+    return true;
+  }
+
+  constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null, user_default = false) {
     super();
 
     this.id = uuid();
@@ -57,6 +62,7 @@ class Diagram extends PersistedEntity {
     this.diagram_xml = diagram_xml;
     this.blueprint_id = blueprint_id;
     this.is_public = is_public;
+    this.user_default = user_default
   }
 
 }

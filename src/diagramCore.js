@@ -33,49 +33,64 @@ class DiagramCore {
 
   async saveDiagram(diagram_obj) {
     logger.debug('saveDiagram service called');
-    const { name, user_id, diagram_xml, workflow_data, isPublic } = diagram_obj;
+    const { name, user_id, user_default, diagram_xml, workflow_data, isPublic } = diagram_obj;
     let userId;
-    if(!isPublic) {
+    if (!isPublic) {
       userId = user_id
     }
-    const diagram = await new Diagram(name, diagram_xml, userId).save();
+    if (user_default) {
+      await Diagram.unsetDefault({ user_id: userId });
+    }
+    const diagram = await new Diagram(name, diagram_xml, userId, null, null, user_default).save();
 
     let blueprint;
-    if(workflow_data) {
-      if(workflow_data.blueprint_spec) {
-        blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)        
+    if (workflow_data) {
+      if (workflow_data.blueprint_spec) {
+        blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)
         await Diagram.update(diagram.id, { blueprint_id: blueprint.id })
       }
-      if(workflow_data.id) {
+      if (workflow_data.id) {
         const workflow = await new WorkflowCore(this._db).saveWorkflow({
           id: workflow_data.id,
           name: workflow_data.name,
           version: workflow_data.version,
           server_id: workflow_data.server_id,
-          blueprint_id: blueprint.id 
+          blueprint_id: blueprint.id
         })
         const response = await Diagram.fetch(diagram.id);
         delete response.diagram_xml;
-        return { 
+        return {
           ...response,
           ...{
             workflow_id: workflow.id,
             workflow_name: workflow.name,
             version: workflow.version,
             server_id: workflow.server_id,
-            blueprint_id: workflow.blueprint_id 
+            blueprint_id: workflow.blueprint_id
           }
         }
-      }      
-    } 
-    
+      }
+    }
+
     return diagram;
-    
+
+  }
+
+  async setAsDefault(id) {
+    logger.debug('setAsDefault service called');
+
+    const diagram = await Diagram.fetch(id);
+    if (diagram) {
+      await Diagram.unsetDefault({ exception: id, user_id: diagram.user_id });
+      diagram.user_default = true;
+      return await Diagram.update(id, { ...diagram });
+    }
+    throw new Error('Diagram not found')
   }
 
   async getAllDiagrams() {
     logger.debug('getAllDiagrams service called');
-  
+
     return await Diagram.fetchAll();
   }
 
@@ -100,13 +115,13 @@ class DiagramCore {
 
   async getLatestDiagramByWorkflowId(workflow_id) {
     logger.debug('getLatestDiagramByWorkflowId service called');
-  
+
     return await Diagram.fetchLatestByWorkflowId(workflow_id);
   }
 
   async getDiagramsByUserAndWF(user_id, workflow_id) {
     logger.debug('getDiagramsByUserAndWF service called');
-  
+
     return await Diagram.fetchByUserAndWF(user_id, workflow_id);
   }
 
