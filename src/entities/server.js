@@ -23,6 +23,7 @@ class Server extends PersistedEntity {
     return {
       id: data.id,
       url: data.url,
+      namespace: data.namespace,
       config: data.config,
       last_sync: data.last_sync,
     }
@@ -32,15 +33,17 @@ class Server extends PersistedEntity {
     return {
       id: server.id,
       url: server.url,
+      namespace: server.namespace,
       config: server.config,
     }
   }
 
-  constructor(url, config = null) {
+  constructor(url, namespace, config = null) {
     super();
 
     this.id = uuid();
     this.url = url;
+    this.namespace = namespace;
     this.config = config;
   }
 
