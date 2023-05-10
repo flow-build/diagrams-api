@@ -34,6 +34,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram_xml",
         "diagram.blueprint_id",
         "diagram.user_id",
+        "diagram.user_default",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -52,6 +53,28 @@ class DiagramKnexPersist extends KnexPersist {
       .where("id", diagram_id)
       .update({ ...diagram, updated_at: "now" })
       .returning("*");
+  }
+
+  async unsetDefault({ user_id, exception }) {
+    return await this._db(this._table)
+      .where("user_id", user_id)
+      .update({ user_default: false })
+      .modify((builder) => {
+        if (exception) {
+          builder.where("id", "!=", exception);
+        }
+      });
+  }
+
+  async setDefault({ user_id, id }) {
+    return await this._db.raw(`
+      update diagram set user_default = case
+      when id='${id}' then true
+      when id!='${id}' then false
+      end
+      where user_id='${user_id}'
+      returning *;
+    `)
   }
 
   async delete(id) {
@@ -148,7 +171,7 @@ class WorkflowKnexPersist extends KnexPersist {
   }
 
   async save(workflow) {
-    await this._db(this._table).insert(workflow);  
+    await this._db(this._table).insert(workflow);
     return "create";
   }
 

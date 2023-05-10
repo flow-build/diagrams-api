@@ -1,4 +1,4 @@
-const { v4: uuid } = require('uuid'); 
+const { v4: uuid } = require('uuid');
 const { Diagram } = require('../entities/diagram');
 const { DiagramCore } = require('../../index');
 const { validate } = require('uuid');
@@ -30,21 +30,21 @@ describe('DiagramCore tests (without workflow_id)', () => {
     const diagramCore = new DiagramCore(db);
     expect(diagramCore).toBeInstanceOf(DiagramCore);
   });
-  
+
   test('create diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const diagram = await diagramCore.saveDiagram(diagramPayload);
     expect(validate(diagram.id)).toBeTruthy();
     expect(diagram.name).toEqual('Test');
   });
-  
+
   test('get all diagrams', async () => {
     const diagramCore = new DiagramCore(db);
     diagramCore.saveDiagram(diagramPayload);
     const diagrams = await diagramCore.getAllDiagrams(diagramPayload);
     expect(diagrams.length).toBeTruthy();
   });
-  
+
   test('get diagrams by user_id', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload)
@@ -54,15 +54,15 @@ describe('DiagramCore tests (without workflow_id)', () => {
     expect(diagrams[0].user_id).toEqual(diagramCreated.user_id);
     expect(diagrams[0].user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
   });
-  
+
   test('get diagram by id', async () => {
-    const diagramCore = new DiagramCore(db);    
+    const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload)
     const diagramCreated = await diagramCore.saveDiagram(payload);
     const diagram = await diagramCore.getDiagramById(diagramCreated.id);
     expect(diagram).toBeDefined();
   });
-  
+
   test('update diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload)
@@ -76,7 +76,20 @@ describe('DiagramCore tests (without workflow_id)', () => {
     expect(diagramUpdated.name).toEqual('Test Update');
     expect(diagramUpdated.is_aligned).toBeTruthy();
   });
-  
+
+  test('set as default', async () => {
+    const diagramCore = new DiagramCore(db);
+    const payload = _.cloneDeep(diagramPayload)
+    const diagramCreated_1 = await diagramCore.saveDiagram(payload);
+    const diagramCreated_2 = await diagramCore.saveDiagram({ ...payload, user_default: true });
+    expect(diagramCreated_1.user_default).toBe(false);
+    expect(diagramCreated_2.user_default).toBe(true);
+    const diagramUpdated_1 = await diagramCore.setAsDefault(diagramCreated_1.id);
+    const diagramUpdated_2 = await diagramCore.getDiagramById(diagramCreated_2.id);
+    expect(diagramUpdated_1.user_default).toBe(true);
+    expect(diagramUpdated_2.user_default).toBe(false);
+  });
+
   test('delete diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload)
@@ -110,14 +123,14 @@ describe('DiagramCore tests (with workflow_id)', () => {
     const diagrams = await diagramCore.getDiagramsByWorkflowId(workflowId, '96293285-33b7-4a69-9b64-822059569734');
     expect(diagrams.length).toBeGreaterThan(0);
   });
-  
+
   test('get latest diagram by workflow_id', async () => {
     const diagramCore = new DiagramCore(db);
     const workflowId = 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f';
     const result = await diagramCore.getLatestDiagramByWorkflowId(workflowId, '96293285-33b7-4a69-9b64-822059569734');
     expect(result.id).toBeDefined();
   });
-  
+
   test('get diagrams by user_id and workflow_id', async () => {
     const diagramCore = new DiagramCore(db);
     const diagrams = await diagramCore.getDiagramsByUserAndWF('96293285-33b7-4a69-9b64-822059569734', 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
