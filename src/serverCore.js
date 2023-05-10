@@ -39,7 +39,7 @@ class ServerCore {
   async getAllServers() {
     logger.debug('getAllServers service called');
 
-    return await Server.fetchAll(diagram_id);
+    return await Server.fetchAll();
   }
 
   async deleteServer(server_id) {
