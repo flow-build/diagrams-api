@@ -15,10 +15,10 @@ afterAll(async () => {
 
 describe('Server tests', () => {
   test('save server', async () => {
-    const serverInstance = new Server('https://flowbuild-homolog.com', { namespace: 'homolog' });
+    const serverInstance = new Server('https://flowbuild-homolog.com', 'homolog');
     const saved_server = await serverInstance.save();
     expect(saved_server.id).toBeDefined();
-    expect(saved_server.config.namespace).toEqual('homolog');
+    expect(saved_server.namespace).toEqual('homolog');
   });
 
   test('fetchAll servers', async () => {
@@ -26,12 +26,12 @@ describe('Server tests', () => {
     expect(servers).toHaveLength(2);
     expect(servers[0].id).toBeDefined();
     expect(servers[0].url).toEqual('https://flowbuild-homolog.com');
-    expect(servers[0].config.namespace).toEqual('homolog');
+    expect(servers[0].namespace).toEqual('homolog');
   });
 
   test('error trying to save the same url twice', async () => {
     await expect(async () => {
-      const serverInstance = new Server('https://flowbuild-homolog.com', { namespace: 'homolog' });
+      const serverInstance = new Server('https://flowbuild-homolog.com', 'homolog');
       await serverInstance.save();
     }).rejects.toBeInstanceOf(Error);
   });
