@@ -55,6 +55,17 @@ class DiagramKnexPersist extends KnexPersist {
       .returning("*");
   }
 
+  async unsetDefault({ user_id, exception }) {
+    return await this._db(this._table)
+      .where("user_id", user_id)
+      .update({ user_default: false })
+      .modify((builder) => {
+        if (exception) {
+          builder.where("id", "!=", exception);
+        }
+      });
+  }
+
   async setDefault({ user_id, id }) {
     return await this._db.raw(`
       update diagram set user_default = case
