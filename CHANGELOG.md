@@ -1,3 +1,15 @@
+## [1.6.0-rc.2](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.1...v1.6.0-rc.2) (2023-05-10)
+
+
+### Features
+
+* adds setDefault method to 'Diagram' entity ([03ca213](https://github.com/flow-build/diagrams-core/commit/03ca213d9bd3ab832ca3821fa6bcd4f7d0df9841))
+
+
+### Bug Fixes
+
+* sets back 'unsetDefault' to be used on 'saveDiagram' ([f76aa54](https://github.com/flow-build/diagrams-core/commit/f76aa542b546ce1894a7d2f40b4c10f978c46c1e))
+
 ## [1.6.0-rc.1](https://github.com/flow-build/diagrams-core/compare/v1.5.0...v1.6.0-rc.1) (2023-05-09)
 
 
