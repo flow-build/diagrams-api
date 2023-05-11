@@ -63,6 +63,36 @@ describe('DiagramCore tests (without workflow_id)', () => {
     expect(diagram).toBeDefined();
   });
 
+  test('get default diagram by user_id', async () => {
+    const diagramCore = new DiagramCore(db);
+    const payload = _.cloneDeep({ ...diagramPayload, user_default: true })
+    await diagramCore.saveDiagram(payload);
+    const diagram = await diagramCore.getDefaultDiagram(diagramPayload.user_id);
+    expect(diagram.user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
+    expect(diagram.user_default).toBe(true);
+    await diagramCore.deleteDiagram(diagram.id)
+  });
+
+  test('get default diagram by user_id (no default)', async () => {
+    const diagramCore = new DiagramCore(db);
+    const payload = _.cloneDeep({ ...diagramPayload, user_default: false })
+    await diagramCore.saveDiagram(payload);
+    const diagram = await diagramCore.getDefaultDiagram(diagramPayload.user_id);
+    expect(diagram.user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
+    expect(diagram.user_default).toBe(false);
+    await diagramCore.deleteDiagram(diagram.id)
+  });
+
+  test('get default diagram (latest public)', async () => {
+    const diagramCore = new DiagramCore(db);
+    const other_user_id = '956edb9a-9208-46b0-aa88-355d1ea4df40'
+    const payload = _.cloneDeep({ ...diagramPayload, user_id: other_user_id, isPublic: true })
+    await diagramCore.saveDiagram(payload);
+    const diagram = await diagramCore.getDefaultDiagram(diagramPayload.user_id);
+    expect(diagram.id).toBeDefined();
+    await diagramCore.deleteDiagram(diagram.id)
+  });
+
   test('update diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload)
@@ -137,6 +167,24 @@ describe('DiagramCore tests (with workflow_id)', () => {
     expect(diagrams.length).toBeTruthy();
     expect(diagrams[0].user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
     expect(diagrams[0].workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+  });
+
+  test('get default diagram by user_id and workflow_id', async () => {
+    const diagramCore = new DiagramCore(db);
+    const payload = _.cloneDeep({ ...diagramPayload, user_default: true })
+    const workflow_id = 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f';
+    payload.workflow_data = {
+      id: workflow_id,
+      name: 'Workflow Example',
+      version: 1,
+      server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
+      blueprint_spec
+    }
+    await diagramCore.saveDiagram(payload);
+    // await populateDiagram(payload);
+    const diagram = await diagramCore.getDefaultDiagram('96293285-33b7-4a69-9b64-822059569734', { workflow_id });
+    expect(diagram.user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
+    expect(diagram.workflow_id).toEqual('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
   });
 });
 
