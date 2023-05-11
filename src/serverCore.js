@@ -49,7 +49,7 @@ class ServerCore {
   }
 
   async updateServer(server_id, server) {
-    logger.debug('updateServerLastSync service called');
+    logger.debug('updateServer service called');
 
     return await Server.update(server_id, server);
   }
