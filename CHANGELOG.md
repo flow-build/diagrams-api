@@ -1,3 +1,10 @@
+## [1.6.0-rc.5](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.4...v1.6.0-rc.5) (2023-05-11)
+
+
+### Features
+
+* adds getDefaultDiagram method to Diagram entity ([df29eb3](https://github.com/flow-build/diagrams-core/commit/df29eb33a2683a279c726f10c40eda2fa4a22f4d))
+
 ## [1.6.0-rc.4](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.3...v1.6.0-rc.4) (2023-05-11)
 
 
