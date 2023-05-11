@@ -34,6 +34,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram_xml",
         "diagram.blueprint_id",
         "diagram.user_id",
+        "diagram.type",
         "diagram.user_default",
         "diagram.created_at",
         "diagram.updated_at",
