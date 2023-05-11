@@ -22,17 +22,24 @@ describe('ServerCore tests ', () => {
     expect(serverCore).toBeInstanceOf(ServerCore);
   });
   
-  test('create server', async () => {
+  test('save server', async () => {
     const serverCore = new ServerCore(db);
     const serverData = {
-      url: 'https://flowbuild-homolog.com', 
-      config: {
-        namespace: 'homolog',
-      },
+      url: 'https://flowbuild-homolog.com',
+      namespace: 'homolog',
     };
     const serverCreated = await serverCore.saveServer(serverData);
     expect(validate(serverCreated.id)).toBeTruthy();
     expect(serverCreated.url).toEqual('https://flowbuild-homolog.com');
-    expect(serverCreated.config.namespace).toEqual('homolog');
+    expect(serverCreated.namespace).toEqual('homolog');
+  });
+
+  test('get all servers', async () => {
+    const serverCore = new ServerCore(db);
+    const servers = await serverCore.getAllServers();
+    expect(servers).toHaveLength(2);
+    expect(validate(servers[0].id)).toBeTruthy();
+    expect(servers[0].url).toEqual('https://flowbuild-homolog.com');
+    expect(servers[0].namespace).toEqual('homolog');
   });
 });

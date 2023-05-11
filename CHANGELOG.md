@@ -1,3 +1,11 @@
+## [1.6.0-rc.3](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.2...v1.6.0-rc.3) (2023-05-10)
+
+
+### Bug Fixes
+
+* adjust method getAllServers of serverCore ([eb76ec5](https://github.com/flow-build/diagrams-core/commit/eb76ec5327d03a8aa1abcd09801e4e7cb8301e32))
+* adjust property namespace on Server entity ([0c656aa](https://github.com/flow-build/diagrams-core/commit/0c656aa856081296aacdec81484f3f7616649eef))
+
 ## [1.6.0-rc.2](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.1...v1.6.0-rc.2) (2023-05-10)
 
 

@@ -17,6 +17,10 @@ class KnexPersist {
   async get(obj_id) {
     return await this._db.select("*").from(this._table).where("id", obj_id).first();
   }
+
+  async getAll() {
+    return await this._db.select("*").from(this._table).orderBy("updated_at", "desc");
+  }
 }
 
 class DiagramKnexPersist extends KnexPersist {
