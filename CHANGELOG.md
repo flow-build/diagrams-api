@@ -1,3 +1,10 @@
+## [1.6.0-rc.6](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.5...v1.6.0-rc.6) (2023-05-11)
+
+
+### Features
+
+* updates 'getByUserAndWF' query ([8f7319b](https://github.com/flow-build/diagrams-core/commit/8f7319b91d893e3207e6d2458d7a80eb37487a96))
+
 ## [1.6.0-rc.5](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.4...v1.6.0-rc.5) (2023-05-11)
 
 
