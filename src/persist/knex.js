@@ -86,7 +86,8 @@ class DiagramKnexPersist extends KnexPersist {
       update diagram set user_default = case
       when id='${id}' then true
       when id!='${id}' then false
-      end
+      end,
+      updated_at = now()
       where user_id='${user_id}'
       returning *;
     `)
@@ -106,6 +107,8 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram_xml",
         "diagram.blueprint_id",
         "diagram.user_id",
+        "diagram.type",
+        "diagram.user_default",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -124,7 +127,9 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.name",
         "diagram_xml",
         "diagram.blueprint_id",
-        "user_id",
+        "diagram.user_id",
+        "diagram.type",
+        "diagram.user_default",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -148,7 +153,9 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.name",
         "diagram_xml",
         "diagram.blueprint_id",
-        "user_id",
+        "diagram.user_id",
+        "diagram.type",
+        "diagram.user_default",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -156,6 +163,57 @@ class DiagramKnexPersist extends KnexPersist {
       )
       .where({ user_id: user_id, "workflow.id": workflow_id })
       .orderBy("diagram.updated_at", "desc");
+  }
+
+  async getLatestPublic() {
+    const workflow = new WorkflowKnexPersist(this._db);
+    return await this._db(this._table)
+      .leftJoin(workflow._table, `${workflow._table}.blueprint_id`, `${this._table}.blueprint_id`)
+      .select(
+        "diagram.id",
+        "diagram.name",
+        "diagram_xml",
+        "diagram.blueprint_id",
+        "diagram.user_id",
+        "diagram.type",
+        "diagram.user_default",
+        "diagram.created_at",
+        "diagram.updated_at",
+        "is_aligned",
+        "workflow.id as worflow_id",
+      )
+      .where("diagram.is_public", true)
+      .orderBy("updated_at", "desc")
+      .first();
+  }
+
+  async getDefaultDiagram(user_id, filters = {}) {
+    const workflow = new WorkflowKnexPersist(this._db);
+    return await this._db(this._table)
+      .leftJoin(workflow._table, `${workflow._table}.blueprint_id`, `${this._table}.blueprint_id`)
+      .select(
+        "diagram.id",
+        "diagram.name",
+        "diagram_xml",
+        "diagram.blueprint_id",
+        "diagram.user_id",
+        "diagram.type",
+        "diagram.user_default",
+        "diagram.created_at",
+        "diagram.updated_at",
+        "is_aligned",
+        "workflow.id as workflow_id"
+      )
+      .where("diagram.user_id", user_id)
+      .andWhere("diagram.user_default", true)
+      .first()
+      .modify((builder) => {
+        if (filters) {
+          if (filters.workflow_id) {
+            builder.where("workflow.id", "=", filters.workflow_id);
+          }
+        }
+      });
   }
 }
 
