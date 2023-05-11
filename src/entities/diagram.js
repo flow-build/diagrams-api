@@ -61,6 +61,17 @@ class Diagram extends PersistedEntity {
     return this.deserialize(default_);
   }
 
+  static async getDefaultDiagram(user_id, filters = {}) {
+    let serialized = await this.getPersist().getDefaultDiagram(user_id, filters);
+    if (!serialized) {
+      [serialized] = await this.getPersist().getByUserId(user_id);
+    }
+    if (!serialized) {
+      serialized = await this.getPersist().getLatestPublic();
+    }
+    return this.deserialize(serialized);
+  }
+
   constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null, user_default = false, type = 'standard') {
     super();
 

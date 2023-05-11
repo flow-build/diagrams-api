@@ -41,7 +41,7 @@ class DiagramCore {
     if (user_default) {
       await Diagram.unsetDefault({ user_id: userId });
     }
-    const diagram = await new Diagram(name, diagram_xml, userId, null, null, user_default, type).save();
+    const diagram = await new Diagram(name, diagram_xml, userId, isPublic, null, user_default, type).save();
 
     let blueprint;
     if (workflow_data) {
@@ -121,6 +121,12 @@ class DiagramCore {
     logger.debug('getDiagramsByUserAndWF service called');
 
     return await Diagram.fetchByUserAndWF(user_id, workflow_id);
+  }
+
+  async getDefaultDiagram(user_id, filters = {}) {
+    logger.debug('getDefaultDiagram service called');
+
+    return await Diagram.getDefaultDiagram(user_id, filters);
   }
 
   async updateDiagram(id, diagram_obj) {
