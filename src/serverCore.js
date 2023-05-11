@@ -42,6 +42,18 @@ class ServerCore {
     return await Server.fetchAll();
   }
 
+  async getServer(server_id) {
+    logger.debug('getServer service called');
+
+    return await Server.fetch(server_id);
+  }
+
+  async updateServer(server_id, server) {
+    logger.debug('updateServer service called');
+
+    return await Server.update(server_id, server);
+  }
+
   async deleteServer(server_id) {
     logger.debug('deleteServer service called');
 

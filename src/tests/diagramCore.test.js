@@ -36,6 +36,17 @@ describe('DiagramCore tests (without workflow_id)', () => {
     const diagram = await diagramCore.saveDiagram(diagramPayload);
     expect(validate(diagram.id)).toBeTruthy();
     expect(diagram.name).toEqual('Test');
+    expect(diagram.type).toEqual('standard');
+  });
+
+  test('create diagram with type nobags', async () => {
+    const diagramCore = new DiagramCore(db);
+    diagramPayload.type = 'nobags';
+    const diagram = await diagramCore.saveDiagram(diagramPayload);
+    expect(validate(diagram.id)).toBeTruthy();
+    expect(diagram.name).toEqual('Test');
+    expect(diagram.type).toEqual('nobags');
+    delete diagramPayload.type;
   });
 
   test('get all diagrams', async () => {
