@@ -16,30 +16,47 @@ afterAll(async () => {
 });
 
 describe('ServerCore tests ', () => {
+  let serverCore = new ServerCore(db);
+  let serverId;
 
   test('constructor works', () => {
-    const serverCore = new ServerCore(db);
-    expect(serverCore).toBeInstanceOf(ServerCore);
+    const serverCoreInstance = new ServerCore(db);
+    expect(serverCoreInstance).toBeInstanceOf(ServerCore);
   });
   
   test('save server', async () => {
-    const serverCore = new ServerCore(db);
     const serverData = {
       url: 'https://flowbuild-homolog.com',
       namespace: 'homolog',
     };
     const serverCreated = await serverCore.saveServer(serverData);
+    serverId = serverCreated.id;
     expect(validate(serverCreated.id)).toBeTruthy();
     expect(serverCreated.url).toEqual('https://flowbuild-homolog.com');
     expect(serverCreated.namespace).toEqual('homolog');
   });
 
   test('get all servers', async () => {
-    const serverCore = new ServerCore(db);
     const servers = await serverCore.getAllServers();
     expect(servers).toHaveLength(2);
     expect(validate(servers[0].id)).toBeTruthy();
     expect(servers[0].url).toEqual('https://flowbuild-homolog.com');
     expect(servers[0].namespace).toEqual('homolog');
+  });
+
+  test('get server', async () => {
+    const server = await serverCore.getServer(serverId);
+    expect(server.id).toEqual(serverId);
+    expect(server.url).toEqual('https://flowbuild-homolog.com');
+    expect(server.namespace).toEqual('homolog');
+  });
+
+  test('update server last sync', async () => {
+    const lastSync = new Date();
+    const serverUpdated = await serverCore.updateServer(serverId, { last_sync: lastSync });
+    expect(serverUpdated.id).toEqual(serverId);
+    expect(serverUpdated.url).toEqual('https://flowbuild-homolog.com');
+    expect(serverUpdated.namespace).toEqual('homolog');
+    expect(serverUpdated.last_sync).toEqual(lastSync);
   });
 });

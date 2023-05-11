@@ -14,9 +14,12 @@ afterAll(async () => {
 });
 
 describe('Server tests', () => {
+  let serverId;
+
   test('save server', async () => {
     const serverInstance = new Server('https://flowbuild-homolog.com', 'homolog');
     const saved_server = await serverInstance.save();
+    serverId = saved_server.id;
     expect(saved_server.id).toBeDefined();
     expect(saved_server.namespace).toEqual('homolog');
   });
@@ -27,6 +30,22 @@ describe('Server tests', () => {
     expect(servers[0].id).toBeDefined();
     expect(servers[0].url).toEqual('https://flowbuild-homolog.com');
     expect(servers[0].namespace).toEqual('homolog');
+  });
+
+  test('fetch server', async () => {
+    const server = await Server.fetch(serverId);
+    expect(server.id).toEqual(serverId);
+    expect(server.url).toEqual('https://flowbuild-homolog.com');
+    expect(server.namespace).toEqual('homolog');
+  });
+
+  test('update server', async () => {
+    const last_sync = new Date();
+    const server = await Server.update(serverId, { last_sync });
+    expect(server.id).toEqual(serverId);
+    expect(server.url).toEqual('https://flowbuild-homolog.com');
+    expect(server.namespace).toEqual('homolog');
+    expect(server.last_sync).toEqual(last_sync);
   });
 
   test('error trying to save the same url twice', async () => {

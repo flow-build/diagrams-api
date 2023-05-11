@@ -10,6 +10,16 @@ class KnexPersist {
     this._table = table;
   }
 
+  async save(obj, ...args) {
+    const is_update = obj.id && (await this.get(obj.id));
+    if (is_update) {
+      await this.update(obj.id, obj, ...args);
+      return "update";
+    }
+    await this.create(obj, ...args);
+    return "create";
+  }
+
   async delete(obj_id) {
     return await this._db(this._table).where("id", obj_id).del();
   }
@@ -48,7 +58,7 @@ class DiagramKnexPersist extends KnexPersist {
       .orderBy("updated_at", "desc");
   }
 
-  async save(diagram) {
+  async create(diagram) {
     await this._db(this._table).insert(diagram);
     return "create";
   }
@@ -175,7 +185,7 @@ class WorkflowKnexPersist extends KnexPersist {
     super(db, Workflow, "workflow");
   }
 
-  async save(workflow) {
+  async create(workflow) {
     await this._db(this._table).insert(workflow);
     return "create";
   }
@@ -193,9 +203,16 @@ class ServerKnexPersist extends KnexPersist {
     super(db, Server, "server");
   }
 
-  async save(server) {
+  async create(server) {
     await this._db(this._table).insert(server);
     return "create";
+  }
+
+  async update(server_id, server) {
+    return await this._db(this._table)
+      .where("id", server_id)
+      .update({ ...server, updated_at: "now" })
+      .returning("*");
   }
 }
 
