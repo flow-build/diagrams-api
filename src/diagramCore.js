@@ -33,7 +33,7 @@ class DiagramCore {
 
   async saveDiagram(diagram_obj) {
     logger.debug('saveDiagram service called');
-    const { name, user_id, user_default, diagram_xml, workflow_data, isPublic } = diagram_obj;
+    const { name, user_id, user_default, diagram_xml, workflow_data, isPublic, type } = diagram_obj;
     let userId;
     if (!isPublic) {
       userId = user_id
@@ -41,7 +41,7 @@ class DiagramCore {
     if (user_default) {
       await Diagram.unsetDefault({ user_id: userId });
     }
-    const diagram = await new Diagram(name, diagram_xml, userId, null, null, user_default).save();
+    const diagram = await new Diagram(name, diagram_xml, userId, null, null, user_default, type).save();
 
     let blueprint;
     if (workflow_data) {

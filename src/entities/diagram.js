@@ -26,6 +26,7 @@ class Diagram extends PersistedEntity {
       updated_at: data.updated_at,
       name: data.name,
       diagram_xml: data.diagram_xml,
+      type: data.type,
       blueprint_id: data.blueprint_id,
       user_id: data.user_id,
       is_public: data.is_public,
@@ -40,6 +41,7 @@ class Diagram extends PersistedEntity {
       id: diagram.id,
       name: diagram.name,
       diagram_xml: diagram.diagram_xml,
+      type: diagram.type,
       blueprint_id: diagram.blueprint_id,
       user_id: diagram.user_id,
       user_default: diagram.user_default,
@@ -59,7 +61,7 @@ class Diagram extends PersistedEntity {
     return this.deserialize(default_);
   }
 
-  constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null, user_default = false) {
+  constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null, user_default = false, type = 'standard') {
     super();
 
     this.id = uuid();
@@ -69,6 +71,7 @@ class Diagram extends PersistedEntity {
     this.blueprint_id = blueprint_id;
     this.is_public = is_public;
     this.user_default = user_default
+    this.type = type
   }
 
 }
