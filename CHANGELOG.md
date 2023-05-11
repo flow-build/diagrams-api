@@ -1,3 +1,12 @@
+## [1.6.0-rc.4](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.3...v1.6.0-rc.4) (2023-05-11)
+
+
+### Features
+
+* add methods getServer & updateServer on serverCore ([6ffa0c9](https://github.com/flow-build/diagrams-core/commit/6ffa0c9c61623d1aaa7eee8558c4def44f124d38))
+* adds 'type' column to diagram table ([a34d8b3](https://github.com/flow-build/diagrams-core/commit/a34d8b3d10bf209dfe55939ca4a26c835528cc2e))
+* adds 'type' to saveDiagram ([7434e8d](https://github.com/flow-build/diagrams-core/commit/7434e8dbbe87b236fbe0da567b355e6637a0cf68))
+
 ## [1.6.0-rc.3](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.2...v1.6.0-rc.3) (2023-05-10)
 
 
