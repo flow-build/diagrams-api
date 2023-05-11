@@ -50,6 +50,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.user_id",
         "diagram.type",
         "diagram.user_default",
+        "diagram.is_public",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -109,6 +110,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.user_id",
         "diagram.type",
         "diagram.user_default",
+        "diagram.is_public",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -130,6 +132,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.user_id",
         "diagram.type",
         "diagram.user_default",
+        "diagram.is_public",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -156,13 +159,15 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.user_id",
         "diagram.type",
         "diagram.user_default",
+        "diagram.is_public",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
         "workflow.id as workflow_id"
       )
       .where({ user_id: user_id, "workflow.id": workflow_id })
-      .orderBy("diagram.updated_at", "desc");
+      .orWhere({ is_public: true, "workflow.id": workflow_id })
+      .orderBy([{ column: "diagram.is_public", order: "asc" }, { column: "diagram.updated_at", order: "desc" }]);
   }
 
   async getLatestPublic() {
@@ -177,6 +182,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.user_id",
         "diagram.type",
         "diagram.user_default",
+        "diagram.is_public",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
@@ -199,6 +205,7 @@ class DiagramKnexPersist extends KnexPersist {
         "diagram.user_id",
         "diagram.type",
         "diagram.user_default",
+        "diagram.is_public",
         "diagram.created_at",
         "diagram.updated_at",
         "is_aligned",
