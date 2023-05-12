@@ -8,4 +8,4 @@ module.exports = {
   BlueprintCore,
   WorkflowCore,
   ServerCore,
-}
+};

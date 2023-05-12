@@ -1,4 +1,4 @@
-const { v4: uuid } = require('uuid'); 
+const { v4: uuid } = require('uuid');
 const { PersistedEntity } = require('./base');
 const _ = require('lodash');
 
@@ -11,7 +11,7 @@ class Server extends PersistedEntity {
     if (!serialized) {
       return;
     }
-    
+
     if (_.isArray(serialized)) {
       return serialized.map((data) => this._deserialized(data));
     } else {
@@ -26,7 +26,7 @@ class Server extends PersistedEntity {
       namespace: data.namespace,
       config: data.config,
       last_sync: data.last_sync,
-    }
+    };
   }
 
   static serialize(server) {
@@ -35,7 +35,7 @@ class Server extends PersistedEntity {
       url: server.url,
       namespace: server.namespace,
       config: server.config,
-    }
+    };
   }
 
   constructor(url, namespace, config = null) {
@@ -46,9 +46,8 @@ class Server extends PersistedEntity {
     this.namespace = namespace;
     this.config = config;
   }
-
 }
 
 module.exports = {
-  Server
-}
+  Server,
+};

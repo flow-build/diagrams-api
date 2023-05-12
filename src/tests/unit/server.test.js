@@ -1,5 +1,5 @@
 const { Server } = require('../../entities/server');
-const { PersistorProvider } = require("../../persist/provider");
+const { PersistorProvider } = require('../../persist/provider');
 const { db } = require('../../utils/db');
 
 beforeAll(async () => {
@@ -17,7 +17,10 @@ describe('Server tests', () => {
   let serverId;
 
   test('save server', async () => {
-    const serverInstance = new Server('https://flowbuild-homolog.com', 'homolog');
+    const serverInstance = new Server(
+      'https://flowbuild-homolog.com',
+      'homolog'
+    );
     const saved_server = await serverInstance.save();
     serverId = saved_server.id;
     expect(saved_server.id).toBeDefined();
@@ -50,7 +53,10 @@ describe('Server tests', () => {
 
   test('error trying to save the same url twice', async () => {
     await expect(async () => {
-      const serverInstance = new Server('https://flowbuild-homolog.com', 'homolog');
+      const serverInstance = new Server(
+        'https://flowbuild-homolog.com',
+        'homolog'
+      );
       await serverInstance.save();
     }).rejects.toBeInstanceOf(Error);
   });

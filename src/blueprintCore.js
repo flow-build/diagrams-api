@@ -3,7 +3,6 @@ const { PersistorProvider } = require('./persist/provider');
 const { Blueprint } = require('./entities/blueprint');
 
 class BlueprintCore {
-
   static get instance() {
     return Blueprint._instance;
   }
@@ -55,5 +54,5 @@ class BlueprintCore {
 }
 
 module.exports = {
-  BlueprintCore
-}
+  BlueprintCore,
+};

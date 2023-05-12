@@ -1,7 +1,7 @@
 const { Server } = require('../entities/server');
 const { ServerCore } = require('../../index');
 const { validate } = require('uuid');
-const { PersistorProvider } = require("../persist/provider");
+const { PersistorProvider } = require('../persist/provider');
 const { db } = require('../utils/db');
 
 beforeAll(async () => {
@@ -23,7 +23,7 @@ describe('ServerCore tests ', () => {
     const serverCoreInstance = new ServerCore(db);
     expect(serverCoreInstance).toBeInstanceOf(ServerCore);
   });
-  
+
   test('save server', async () => {
     const serverData = {
       url: 'https://flowbuild-homolog.com',
@@ -53,7 +53,9 @@ describe('ServerCore tests ', () => {
 
   test('update server last sync', async () => {
     const lastSync = new Date();
-    const serverUpdated = await serverCore.updateServer(serverId, { last_sync: lastSync });
+    const serverUpdated = await serverCore.updateServer(serverId, {
+      last_sync: lastSync,
+    });
     expect(serverUpdated.id).toEqual(serverId);
     expect(serverUpdated.url).toEqual('https://flowbuild-homolog.com');
     expect(serverUpdated.namespace).toEqual('homolog');
