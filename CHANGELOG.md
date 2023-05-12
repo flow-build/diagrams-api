@@ -1,3 +1,10 @@
+## [1.6.0-rc.8](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.7...v1.6.0-rc.8) (2023-05-12)
+
+
+### Features
+
+* add fetchByUrl method on serverCore ([a5058ca](https://github.com/flow-build/diagrams-core/commit/a5058ca81bd4cc4b750e07ef87d8020e57fce54f))
+
 ## [1.6.0-rc.7](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.6...v1.6.0-rc.7) (2023-05-12)
 
 
