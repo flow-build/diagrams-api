@@ -52,7 +52,9 @@ describe('ServerCore tests ', () => {
   });
 
   test('get server by url', async () => {
-    const server = await serverCore.getServerByUrl('https://flowbuild-homolog.com');
+    const server = await serverCore.getServerByUrl(
+      'https://flowbuild-homolog.com'
+    );
     expect(server.id).toEqual(serverId);
     expect(server.url).toEqual('https://flowbuild-homolog.com');
     expect(server.namespace).toEqual('homolog');
