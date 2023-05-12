@@ -50,6 +50,17 @@ describe('Diagram tests (without workflow_id)', () => {
     expect(fetched_diagram.id).toEqual(saved_diagram.id);
   });
 
+  test('fetchDiagramsByBlueprintsBatch', async () => {
+    const blueprint_ids = ['42a9a60e-e2e5-4d21-8e2f-67318b100e38'];
+    const fetched_diagrams = await Diagram.fetchDiagramsByBlueprintsBatch(
+      blueprint_ids
+    );
+    expect(fetched_diagrams).toHaveLength(1);
+    expect(fetched_diagrams[0].blueprint_id).toEqual(
+      '42a9a60e-e2e5-4d21-8e2f-67318b100e38'
+    );
+  });
+
   test('updateDiagram', async () => {
     const diagram = new Diagram('Test', diagramExample);
     const saved_diagram = await diagram.save();

@@ -73,7 +73,7 @@ class DiagramKnexPersist extends KnexPersist {
         'diagram.created_at',
         'diagram.updated_at',
         'is_aligned',
-        'workflow.id as worflow_id'
+        'workflow.id as workflow_id'
       )
       .orderBy('updated_at', 'desc');
   }
@@ -224,7 +224,7 @@ class DiagramKnexPersist extends KnexPersist {
         'diagram.created_at',
         'diagram.updated_at',
         'is_aligned',
-        'workflow.id as worflow_id'
+        'workflow.id as workflow_id'
       )
       .where('diagram.is_public', true)
       .orderBy('updated_at', 'desc')
@@ -263,6 +263,13 @@ class DiagramKnexPersist extends KnexPersist {
           }
         }
       });
+  }
+
+  async getDiagramsByBlueprintsBatch(blueprint_ids) {
+    return await this._db
+      .select('*')
+      .from(this._table)
+      .whereIn('blueprint_id', blueprint_ids);
   }
 }
 

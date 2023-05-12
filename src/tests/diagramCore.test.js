@@ -79,6 +79,18 @@ describe('DiagramCore tests (without workflow_id)', () => {
     expect(diagram).toBeDefined();
   });
 
+  test('get diagrams by blueprints batch', async () => {
+    const diagramCore = new DiagramCore(db);
+    const blueprintIds = ['42a9a60e-e2e5-4d21-8e2f-67318b100e38'];
+    const fetchedDiagrams = await diagramCore.getDiagramsByBlueprintsBatch(
+      blueprintIds
+    );
+    expect(fetchedDiagrams).toHaveLength(1);
+    expect(fetchedDiagrams[0].blueprint_id).toEqual(
+      '42a9a60e-e2e5-4d21-8e2f-67318b100e38'
+    );
+  });
+
   test('get default diagram by user_id', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep({ ...diagramPayload, user_default: true });

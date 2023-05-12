@@ -75,6 +75,13 @@ class Diagram extends PersistedEntity {
     return this.deserialize(serialized);
   }
 
+  static async fetchDiagramsByBlueprintsBatch(...args) {
+    const serialized = await this.getPersist().getDiagramsByBlueprintsBatch(
+      ...args
+    );
+    return this.deserialize(serialized);
+  }
+
   constructor(
     name,
     diagram_xml,

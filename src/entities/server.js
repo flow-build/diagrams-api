@@ -24,6 +24,7 @@ class Server extends PersistedEntity {
       id: data.id,
       url: data.url,
       namespace: data.namespace,
+      is_syncing: data.is_syncing,
       config: data.config,
       last_sync: data.last_sync,
     };
@@ -34,17 +35,19 @@ class Server extends PersistedEntity {
       id: server.id,
       url: server.url,
       namespace: server.namespace,
+      is_syncing: server.is_syncing,
       config: server.config,
     };
   }
 
-  constructor(url, namespace, config = null) {
+  constructor(url, namespace, config = null, is_syncing = false) {
     super();
 
     this.id = uuid();
     this.url = url;
     this.namespace = namespace;
     this.config = config;
+    this.is_syncing = is_syncing;
   }
 }
 

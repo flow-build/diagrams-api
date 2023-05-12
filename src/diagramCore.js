@@ -120,6 +120,12 @@ class DiagramCore {
     return await Diagram.fetchBatch(ids);
   }
 
+  async getDiagramsByBlueprintsBatch(blueprint_ids) {
+    logger.debug('getDiagramsByBlueprintsBatch service called');
+
+    return await Diagram.fetchDiagramsByBlueprintsBatch(blueprint_ids);
+  }
+
   async getDiagramById(id) {
     logger.debug('getDiagramById service called');
 
