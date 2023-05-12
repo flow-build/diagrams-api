@@ -49,7 +49,7 @@ describe('Blueprint tests', () => {
   });
 
   test('delete blueprints batch', async () => {
-    const ids = [blueprint_id, '42a9a60e-e2e5-4d21-8e2f-67318b100e38']
+    const ids = [blueprint_id, '42a9a60e-e2e5-4d21-8e2f-67318b100e38'];
     await Blueprint.deleteBatch(ids);
     const fetched_blueprints = await Blueprint.fetchAll();
     expect(fetched_blueprints).toHaveLength(0);

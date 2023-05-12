@@ -73,7 +73,7 @@ describe('BlueprintCore tests ', () => {
     const blueprintCore = new BlueprintCore(db);
     await workflowCore.deleteWorkflow('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
     await diagramCore.deleteDiagram('d655538b-95d3-4627-acaf-b391fdc25142');
-    const ids = [blueprintId, '42a9a60e-e2e5-4d21-8e2f-67318b100e38']
+    const ids = [blueprintId, '42a9a60e-e2e5-4d21-8e2f-67318b100e38'];
     await blueprintCore.deleteBlueprintsBatch(ids);
     const blueprintsFetched = await blueprintCore.getAllBlueprints();
     expect(blueprintsFetched).toHaveLength(0);

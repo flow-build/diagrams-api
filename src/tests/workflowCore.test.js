@@ -56,7 +56,9 @@ describe('WorkflowCore tests ', () => {
       '1c8f314b-5421-40cb-9a5b-73fca821c88f'
     );
     expect(workflowsFetched).toHaveLength(2);
-    expect(workflowsFetched[0].id).toEqual('325c80a7-35c4-4af9-83b0-58e40af88b05');
+    expect(workflowsFetched[0].id).toEqual(
+      '325c80a7-35c4-4af9-83b0-58e40af88b05'
+    );
     expect(workflowsFetched[0].name).toEqual('Workflow Test');
     expect(workflowsFetched[0].blueprint_id).toEqual(
       '42a9a60e-e2e5-4d21-8e2f-67318b100e38'
@@ -97,7 +99,9 @@ describe('WorkflowCore tests ', () => {
       blueprint_id: '42a9a60e-e2e5-4d21-8e2f-67318b100e38',
     };
     await workflowCore.saveWorkflow(workflowData);
-    await workflowCore.deleteWorkflowsByServer('1c8f314b-5421-40cb-9a5b-73fca821c88f');
+    await workflowCore.deleteWorkflowsByServer(
+      '1c8f314b-5421-40cb-9a5b-73fca821c88f'
+    );
     const workflowsFetched = await workflowCore.getWorkflowsByServer(
       '1c8f314b-5421-40cb-9a5b-73fca821c88f'
     );

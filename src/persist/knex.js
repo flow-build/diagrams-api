@@ -37,10 +37,7 @@ class KnexPersist {
   }
 
   async getBatch(obj_ids) {
-    return await this._db
-      .select('*')
-      .from(this._table)
-      .whereIn('id', obj_ids);
+    return await this._db.select('*').from(this._table).whereIn('id', obj_ids);
   }
 
   async getAll() {
