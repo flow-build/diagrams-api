@@ -1,3 +1,15 @@
+## [1.6.0-rc.7](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.6...v1.6.0-rc.7) (2023-05-12)
+
+
+### Features
+
+* add deleteBatch & getBatch methods ([150814a](https://github.com/flow-build/diagrams-core/commit/150814a19054d2f769dae50f079fd0aee421cc22))
+
+
+### Bug Fixes
+
+* adjustments & refactors for release ([87546b2](https://github.com/flow-build/diagrams-core/commit/87546b2637185c8680004bea183042aaaf296ea1))
+
 ## [1.6.0-rc.6](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.5...v1.6.0-rc.6) (2023-05-11)
 
 
