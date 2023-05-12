@@ -3,7 +3,6 @@ const { PersistorProvider } = require('./persist/provider');
 const { Workflow } = require('./entities/workflow');
 
 class WorkflowCore {
-
   static get instance() {
     return Workflow._instance;
   }
@@ -33,7 +32,13 @@ class WorkflowCore {
     logger.debug('saveWorkflow service called');
     const { id, name, version, blueprint_id, server_id } = workflow_obj;
 
-    return await new Workflow(id, name, version, blueprint_id, server_id).save();
+    return await new Workflow(
+      id,
+      name,
+      version,
+      blueprint_id,
+      server_id
+    ).save();
   }
 
   async getWorkflowById(id) {
@@ -56,5 +61,5 @@ class WorkflowCore {
 }
 
 module.exports = {
-  WorkflowCore
-}
+  WorkflowCore,
+};

@@ -14,7 +14,9 @@ class BaseEntity {
 
 class PersistedEntity extends BaseEntity {
   static getPersist() {
-    return new PersistorSingleton().getPersistInstance(this.getEntityClass().name);
+    return new PersistorSingleton().getPersistInstance(
+      this.getEntityClass().name
+    );
   }
 
   static async fetch(...args) {
@@ -48,7 +50,7 @@ class PersistedEntity extends BaseEntity {
   }
 
   static async update(...args) {
-    const [ serialized ] = await this.getPersist().update(...args);
+    const [serialized] = await this.getPersist().update(...args);
     return this.deserialize(serialized);
   }
 
@@ -65,12 +67,16 @@ class PersistedEntity extends BaseEntity {
   }
 
   static async fetchDiagramIdsByWorkflowId(...args) {
-    const serialized = await this.getPersist().getDiagramIdsByWorkflowId(...args);
+    const serialized = await this.getPersist().getDiagramIdsByWorkflowId(
+      ...args
+    );
     return this.deserialize(serialized);
   }
-  
+
   static async fetchWorkflowIdsByDiagramId(...args) {
-    const serialized = await this.getPersist().getWorkflowIdsByDiagramId(...args);
+    const serialized = await this.getPersist().getWorkflowIdsByDiagramId(
+      ...args
+    );
     return this.deserialize(serialized);
   }
 
@@ -95,5 +101,5 @@ class PersistedEntity extends BaseEntity {
 
 module.exports = {
   BaseEntity,
-  PersistedEntity
-}
+  PersistedEntity,
+};

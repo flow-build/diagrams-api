@@ -20,7 +20,7 @@ class PersistorSingleton {
     this._persists = {};
 
     for (const [k, v] of Object.entries(this._persist_class_map)) {
-      const [persist, ...parameters] = v;
+      const [, ...parameters] = v;
       this._persists[k] = PersistFactory(k, ...parameters);
     }
 
@@ -33,5 +33,5 @@ class PersistorSingleton {
 }
 
 module.exports = {
-  PersistorSingleton
-}
+  PersistorSingleton,
+};

@@ -1,5 +1,9 @@
-const { DiagramKnexPersist, BlueprintKnexPersist, 
-  WorkflowKnexPersist, ServerKnexPersist } = require('./knex');
+const {
+  DiagramKnexPersist,
+  BlueprintKnexPersist,
+  WorkflowKnexPersist,
+  ServerKnexPersist,
+} = require('./knex');
 const { PersistorSingleton } = require('./persist');
 
 class PersistorProvider {
@@ -12,13 +16,13 @@ class PersistorProvider {
       Diagram: [DiagramKnexPersist, db],
       Blueprint: [BlueprintKnexPersist, db],
       Workflow: [WorkflowKnexPersist, db],
-      Server: [ServerKnexPersist, db]
-    }
+      Server: [ServerKnexPersist, db],
+    };
 
     return new PersistorSingleton(class_map);
   }
 }
 
 module.exports = {
-  PersistorProvider
-}
+  PersistorProvider,
+};

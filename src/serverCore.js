@@ -3,7 +3,6 @@ const { PersistorProvider } = require('./persist/provider');
 const { Server } = require('./entities/server');
 
 class ServerCore {
-
   static get instance() {
     return Server._instance;
   }
@@ -62,5 +61,5 @@ class ServerCore {
 }
 
 module.exports = {
-  ServerCore
-}
+  ServerCore,
+};

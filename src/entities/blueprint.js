@@ -1,6 +1,6 @@
-const { v4: uuid } = require("uuid");
-const { PersistedEntity } = require("./base");
-const _ = require("lodash");
+const { v4: uuid } = require('uuid');
+const { PersistedEntity } = require('./base');
+const _ = require('lodash');
 
 const sortById = (array) => {
   return array.sort((a, b) => {
@@ -13,7 +13,7 @@ const sortById = (array) => {
       return -1;
     }
     return 0;
-  })
+  });
 };
 
 const organize = (spec) => {
@@ -23,7 +23,7 @@ const organize = (spec) => {
     lanes,
     nodes,
   };
-}
+};
 
 class Blueprint extends PersistedEntity {
   static getEntityClass() {

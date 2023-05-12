@@ -33,7 +33,7 @@ class Diagram extends PersistedEntity {
       user_default: data.user_default,
       is_aligned: data.is_aligned,
       workflow_id: data.workflow_id,
-    }
+    };
   }
 
   static serialize(diagram) {
@@ -47,7 +47,7 @@ class Diagram extends PersistedEntity {
       user_default: diagram.user_default,
       is_public: diagram.is_public,
       is_aligned: diagram.is_aligned,
-    }
+    };
   }
 
   static async unsetDefault(...args) {
@@ -57,12 +57,15 @@ class Diagram extends PersistedEntity {
 
   static async setDefault(...args) {
     const { rows } = await this.getPersist().setDefault(...args);
-    const default_ = rows.find(r => r.user_default === true);
+    const default_ = rows.find((r) => r.user_default === true);
     return this.deserialize(default_);
   }
 
   static async getDefaultDiagram(user_id, filters = {}) {
-    let serialized = await this.getPersist().getDefaultDiagram(user_id, filters);
+    let serialized = await this.getPersist().getDefaultDiagram(
+      user_id,
+      filters
+    );
     if (!serialized) {
       [serialized] = await this.getPersist().getByUserId(user_id);
     }
@@ -72,7 +75,15 @@ class Diagram extends PersistedEntity {
     return this.deserialize(serialized);
   }
 
-  constructor(name, diagram_xml, user_id = null, is_public = null, blueprint_id = null, user_default = false, type = 'standard') {
+  constructor(
+    name,
+    diagram_xml,
+    user_id = null,
+    is_public = null,
+    blueprint_id = null,
+    user_default = false,
+    type = 'standard'
+  ) {
     super();
 
     this.id = uuid();
@@ -81,12 +92,11 @@ class Diagram extends PersistedEntity {
     this.diagram_xml = diagram_xml;
     this.blueprint_id = blueprint_id;
     this.is_public = is_public;
-    this.user_default = user_default
-    this.type = type
+    this.user_default = user_default;
+    this.type = type;
   }
-
 }
 
 module.exports = {
-  Diagram
-}
+  Diagram,
+};
