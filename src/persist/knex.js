@@ -348,6 +348,14 @@ class ServerKnexPersist extends KnexPersist {
       .update({ ...server, updated_at: 'now' })
       .returning('*');
   }
+
+  async getByUrl(url) {
+    return await this._db
+      .select('*')
+      .from(this._table)
+      .where('url', url)
+      .first();
+  }
 }
 
 module.exports = {

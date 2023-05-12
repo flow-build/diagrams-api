@@ -40,6 +40,11 @@ class Server extends PersistedEntity {
     };
   }
 
+  static async fetchByUrl(...args) {
+    const serialized = await this.getPersist().getByUrl(...args);
+    return this.deserialize(serialized);
+  }
+
   constructor(url, namespace, config = null, is_syncing = false) {
     super();
 

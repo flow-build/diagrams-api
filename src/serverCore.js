@@ -47,6 +47,12 @@ class ServerCore {
     return await Server.fetch(server_id);
   }
 
+  async getServerByUrl(server_url) {
+    logger.debug('getServerByUrl service called');
+
+    return await Server.fetchByUrl(server_url);
+  }
+
   async updateServer(server_id, server) {
     logger.debug('updateServer service called');
 
