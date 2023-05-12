@@ -16,9 +16,11 @@ afterAll(async () => {
 });
 
 describe('Blueprint tests', () => {
+  let blueprint_id;
   test('save blueprint', async () => {
     const blueprintInstance = new Blueprint(blueprint_spec);
     const saved_blueprint = await blueprintInstance.save();
+    blueprint_id = saved_blueprint.id;
     expect(saved_blueprint.id).toBeDefined();
     expect(saved_blueprint.blueprint_spec.lanes).toBeDefined();
     expect(saved_blueprint.blueprint_spec.nodes).toBeDefined();
@@ -44,5 +46,12 @@ describe('Blueprint tests', () => {
     expect(saved_blueprint.blueprint_spec.lanes).toBeDefined();
     expect(saved_blueprint.blueprint_spec.nodes).toBeDefined();
     expect(saved_blueprint.blueprint_spec.environment).toBeUndefined();
+  });
+
+  test('delete blueprints batch', async () => {
+    const ids = [blueprint_id, '42a9a60e-e2e5-4d21-8e2f-67318b100e38']
+    await Blueprint.deleteBatch(ids);
+    const fetched_blueprints = await Blueprint.fetchAll();
+    expect(fetched_blueprints).toHaveLength(0);
   });
 });

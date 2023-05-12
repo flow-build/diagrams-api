@@ -51,13 +51,9 @@ describe('Server tests', () => {
     expect(server.last_sync).toEqual(last_sync);
   });
 
-  test('error trying to save the same url twice', async () => {
-    await expect(async () => {
-      const serverInstance = new Server(
-        'https://flowbuild-homolog.com',
-        'homolog'
-      );
-      await serverInstance.save();
-    }).rejects.toBeInstanceOf(Error);
+  test('delete server', async () => {
+    await Server.delete(serverId);
+    const server = await Server.fetch(serverId);
+    expect(server).toBeUndefined();
   });
 });

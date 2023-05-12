@@ -24,12 +24,23 @@ class KnexPersist {
     return await this._db(this._table).where('id', obj_id).del();
   }
 
+  async deleteBatch(obj_ids) {
+    return await this._db(this._table).whereIn('id', obj_ids).del();
+  }
+
   async get(obj_id) {
     return await this._db
       .select('*')
       .from(this._table)
       .where('id', obj_id)
       .first();
+  }
+
+  async getBatch(obj_ids) {
+    return await this._db
+      .select('*')
+      .from(this._table)
+      .whereIn('id', obj_ids);
   }
 
   async getAll() {
@@ -302,6 +313,18 @@ class WorkflowKnexPersist extends KnexPersist {
       .where('id', id)
       .update({ ...workflow })
       .returning('*');
+  }
+
+  async getWorkflowsByServer(server_id) {
+    return await this._db
+      .select('*')
+      .from(this._table)
+      .where('server_id', server_id)
+      .orderBy('updated_at', 'desc');
+  }
+
+  async deleteWorkflowsByServer(server_id) {
+    return await this._db(this._table).where('server_id', server_id).del();
   }
 }
 

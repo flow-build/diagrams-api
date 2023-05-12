@@ -114,6 +114,12 @@ class DiagramCore {
     return await Diagram.fetchByUserId(user_id);
   }
 
+  async getDiagramsBatch(ids) {
+    logger.debug('getDiagramsBatch service called');
+
+    return await Diagram.fetchBatch(ids);
+  }
+
   async getDiagramById(id) {
     logger.debug('getDiagramById service called');
 
@@ -154,6 +160,12 @@ class DiagramCore {
     logger.debug('deleteDiagram service called');
 
     return await Diagram.delete(id);
+  }
+
+  async deleteDiagramsBatch(ids) {
+    logger.debug('deleteDiagramsBatch service called');
+
+    return await Diagram.deleteBatch(ids);
   }
 }
 

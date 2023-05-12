@@ -72,6 +72,17 @@ describe('Diagram tests (without workflow_id)', () => {
     const fetched_diagram = await Diagram.fetch(saved_diagram.id);
     expect(fetched_diagram).not.toBeTruthy();
   });
+
+  test('delete diagrams batch', async () => {
+    const first_diagram = new Diagram('First', diagramExample);
+    const first_saved_diagram = await first_diagram.save();
+    const second_diagram = new Diagram('Second', diagramExample);
+    const second_saved_diagram = await second_diagram.save();
+    const ids = [first_saved_diagram.id, second_saved_diagram.id]
+    await Diagram.deleteBatch(ids);
+    const fetched_diagrams = await Diagram.fetchBatch(ids);
+    expect(fetched_diagrams).toHaveLength(0);
+  });
 });
 
 describe('Diagram tests (with workflow_id)', () => {

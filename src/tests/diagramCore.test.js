@@ -157,6 +157,18 @@ describe('DiagramCore tests (without workflow_id)', () => {
     const diagram = await diagramCore.getDiagramById(diagramCreated.id);
     expect(diagram).not.toBeTruthy();
   });
+
+  test('delete diagrams batch', async () => {
+    const diagramCore = new DiagramCore(db);
+    const payload = _.cloneDeep(diagramPayload);
+    const firstDiagramCreated = await diagramCore.saveDiagram(payload);
+    payload.name = 'Second Test';
+    const secondDiagramCreated = await diagramCore.saveDiagram(payload);
+    const ids = [firstDiagramCreated.id, secondDiagramCreated.id];
+    await diagramCore.deleteDiagramsBatch(ids);
+    const diagrams = await diagramCore.getDiagramsBatch(ids);
+    expect(diagrams).toHaveLength(0);
+  });
 });
 
 describe('DiagramCore tests (with workflow_id)', () => {
