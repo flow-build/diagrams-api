@@ -51,6 +51,15 @@ describe('ServerCore tests ', () => {
     expect(server.namespace).toEqual('homolog');
   });
 
+  test('get server by url', async () => {
+    const server = await serverCore.getServerByUrl(
+      'https://flowbuild-homolog.com'
+    );
+    expect(server.id).toEqual(serverId);
+    expect(server.url).toEqual('https://flowbuild-homolog.com');
+    expect(server.namespace).toEqual('homolog');
+  });
+
   test('update server last sync', async () => {
     const lastSync = new Date();
     const serverUpdated = await serverCore.updateServer(serverId, {
