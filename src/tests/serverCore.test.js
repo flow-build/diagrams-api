@@ -61,4 +61,10 @@ describe('ServerCore tests ', () => {
     expect(serverUpdated.namespace).toEqual('homolog');
     expect(serverUpdated.last_sync).toEqual(lastSync);
   });
+
+  test('delete server', async () => {
+    await serverCore.deleteServer(serverId);
+    const server = await serverCore.getServer(serverId);
+    expect(server).toBeUndefined();
+  });
 });

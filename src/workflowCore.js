@@ -47,6 +47,12 @@ class WorkflowCore {
     return await Workflow.fetch(id);
   }
 
+  async getWorkflowsByServer(server_id) {
+    logger.debug('getWorkflowsByServer service called');
+
+    return await Workflow.fetchWorkflowsByServer(server_id);
+  }
+
   async updateWorkflow(id, workflow) {
     logger.debug('updateWorkflow service called');
 
@@ -57,6 +63,12 @@ class WorkflowCore {
     logger.debug('deleteWorkflow service called');
 
     return await Workflow.delete(id);
+  }
+
+  async deleteWorkflowsByServer(server_id) {
+    logger.debug('deleteWorkflowsByServer service called');
+
+    return await Workflow.deleteWorkflowsByServer(server_id);
   }
 }
 

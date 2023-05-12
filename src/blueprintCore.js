@@ -34,6 +34,12 @@ class BlueprintCore {
     return await new Blueprint(blueprint_spec).save();
   }
 
+  async getAllBlueprints() {
+    logger.debug('getAllBlueprints service called');
+
+    return await Blueprint.fetchAll();
+  }
+
   async getBlueprintById(id) {
     logger.debug('getBlueprintById service called');
 
@@ -50,6 +56,12 @@ class BlueprintCore {
     logger.debug('deleteBlueprint service called');
 
     return await Blueprint.delete(id);
+  }
+
+  async deleteBlueprintsBatch(ids) {
+    logger.debug('deleteBlueprintsBatch service called');
+
+    return await Blueprint.deleteBatch(ids);
   }
 }
 

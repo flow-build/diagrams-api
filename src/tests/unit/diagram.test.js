@@ -50,6 +50,17 @@ describe('Diagram tests (without workflow_id)', () => {
     expect(fetched_diagram.id).toEqual(saved_diagram.id);
   });
 
+  test('fetchDiagramsByBlueprintsBatch', async () => {
+    const blueprint_ids = ['42a9a60e-e2e5-4d21-8e2f-67318b100e38'];
+    const fetched_diagrams = await Diagram.fetchDiagramsByBlueprintsBatch(
+      blueprint_ids
+    );
+    expect(fetched_diagrams).toHaveLength(1);
+    expect(fetched_diagrams[0].blueprint_id).toEqual(
+      '42a9a60e-e2e5-4d21-8e2f-67318b100e38'
+    );
+  });
+
   test('updateDiagram', async () => {
     const diagram = new Diagram('Test', diagramExample);
     const saved_diagram = await diagram.save();
@@ -71,6 +82,17 @@ describe('Diagram tests (without workflow_id)', () => {
     await Diagram.delete(saved_diagram.id);
     const fetched_diagram = await Diagram.fetch(saved_diagram.id);
     expect(fetched_diagram).not.toBeTruthy();
+  });
+
+  test('delete diagrams batch', async () => {
+    const first_diagram = new Diagram('First', diagramExample);
+    const first_saved_diagram = await first_diagram.save();
+    const second_diagram = new Diagram('Second', diagramExample);
+    const second_saved_diagram = await second_diagram.save();
+    const ids = [first_saved_diagram.id, second_saved_diagram.id];
+    await Diagram.deleteBatch(ids);
+    const fetched_diagrams = await Diagram.fetchBatch(ids);
+    expect(fetched_diagrams).toHaveLength(0);
   });
 });
 

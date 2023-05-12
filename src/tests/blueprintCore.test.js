@@ -24,6 +24,7 @@ afterAll(async () => {
 });
 
 describe('BlueprintCore tests ', () => {
+  let blueprintId;
   test('constructor works', () => {
     const blueprintCore = new BlueprintCore(db);
     expect(blueprintCore).toBeInstanceOf(BlueprintCore);
@@ -32,6 +33,7 @@ describe('BlueprintCore tests ', () => {
   test('create blueprint', async () => {
     const blueprintCore = new BlueprintCore(db);
     const blueprintCreated = await blueprintCore.saveBlueprint(blueprint_spec);
+    blueprintId = blueprintCreated.id;
     expect(validate(blueprintCreated.id)).toBeTruthy();
   });
 
@@ -63,5 +65,17 @@ describe('BlueprintCore tests ', () => {
       '42a9a60e-e2e5-4d21-8e2f-67318b100e38'
     );
     expect(blueprintFetched).not.toBeTruthy();
+  });
+
+  test('delete blueprint batch', async () => {
+    const workflowCore = new WorkflowCore(db);
+    const diagramCore = new DiagramCore(db);
+    const blueprintCore = new BlueprintCore(db);
+    await workflowCore.deleteWorkflow('ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f');
+    await diagramCore.deleteDiagram('d655538b-95d3-4627-acaf-b391fdc25142');
+    const ids = [blueprintId, '42a9a60e-e2e5-4d21-8e2f-67318b100e38'];
+    await blueprintCore.deleteBlueprintsBatch(ids);
+    const blueprintsFetched = await blueprintCore.getAllBlueprints();
+    expect(blueprintsFetched).toHaveLength(0);
   });
 });

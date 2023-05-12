@@ -24,6 +24,11 @@ class PersistedEntity extends BaseEntity {
     return this.deserialize(serialized);
   }
 
+  static async fetchBatch(...args) {
+    const serialized = await this.getPersist().getBatch(...args);
+    return this.deserialize(serialized);
+  }
+
   static async fetchAll() {
     const serialized = await this.getPersist().getAll();
     return this.deserialize(serialized);
@@ -49,6 +54,11 @@ class PersistedEntity extends BaseEntity {
     return this.deserialize(serialized);
   }
 
+  static async fetchWorkflowsByServer(...args) {
+    const serialized = await this.getPersist().getWorkflowsByServer(...args);
+    return this.deserialize(serialized);
+  }
+
   static async update(...args) {
     const [serialized] = await this.getPersist().update(...args);
     return this.deserialize(serialized);
@@ -56,6 +66,14 @@ class PersistedEntity extends BaseEntity {
 
   static async delete(...args) {
     return await this.getPersist().delete(...args);
+  }
+
+  static async deleteBatch(...args) {
+    return await this.getPersist().deleteBatch(...args);
+  }
+
+  static async deleteWorkflowsByServer(...args) {
+    return await this.getPersist().deleteWorkflowsByServer(...args);
   }
 
   static async deleteByDiagramId(...args) {
