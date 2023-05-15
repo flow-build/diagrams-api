@@ -40,20 +40,21 @@ class DiagramCore {
       workflow_data,
       isPublic,
       type,
+      blueprint_id,
     } = diagram_obj;
     let userId;
     if (!isPublic) {
       userId = user_id;
     }
-    if (user_default) {
-      await Diagram.unsetDefault({ user_id: userId });
+    if (user_default && blueprint_id) {
+      await Diagram.unsetDefault({ user_id: userId, blueprint_id });
     }
     const diagram = await new Diagram(
       name,
       diagram_xml,
       userId,
       isPublic,
-      null,
+      blueprint_id || null,
       user_default,
       type
     ).save();
@@ -97,7 +98,11 @@ class DiagramCore {
 
     const diagram = await Diagram.fetch(id);
     if (diagram) {
-      return await Diagram.setDefault({ id, user_id: diagram.user_id });
+      return await Diagram.setDefault({
+        id,
+        user_id: diagram.user_id,
+        blueprint_id: diagram.blueprint_id,
+      });
     }
     throw new Error('Diagram not found');
   }
