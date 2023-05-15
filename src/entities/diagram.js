@@ -66,11 +66,11 @@ class Diagram extends PersistedEntity {
       user_id,
       filters
     );
-    if (!serialized) {
-      [serialized] = await this.getPersist().getByUserId(user_id);
-    }
-    if (!serialized) {
-      serialized = await this.getPersist().getLatestPublic();
+    if (!serialized && filters.workflow_id) {
+      [serialized] = await this.getPersist().getByUserAndWF(
+        user_id,
+        filters.workflow_id
+      );
     }
     return this.deserialize(serialized);
   }
