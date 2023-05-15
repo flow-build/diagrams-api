@@ -17,6 +17,14 @@ const diagramPayload = {
   diagram_xml: diagramExample,
 };
 
+const workflowPayload = {
+  id: uuid(),
+  name: 'Workflow Example',
+  version: 1,
+  server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
+  blueprint_spec,
+};
+
 beforeAll(async () => {
   PersistorProvider.getPersistor(db);
   return db.raw('START TRANSACTION');
@@ -93,9 +101,16 @@ describe('DiagramCore tests (without workflow_id)', () => {
 
   test('get default diagram by user_id', async () => {
     const diagramCore = new DiagramCore(db);
-    const payload = _.cloneDeep({ ...diagramPayload, user_default: true });
+    const payload = _.cloneDeep({
+      ...diagramPayload,
+      user_default: true,
+      workflow_data: workflowPayload,
+    });
     await diagramCore.saveDiagram(payload);
-    const diagram = await diagramCore.getDefaultDiagram(diagramPayload.user_id);
+    const diagram = await diagramCore.getDefaultDiagram(
+      diagramPayload.user_id,
+      { workflow_id: workflowPayload.id }
+    );
     expect(diagram.user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
     expect(diagram.user_default).toBe(true);
     await diagramCore.deleteDiagram(diagram.id);
@@ -103,9 +118,16 @@ describe('DiagramCore tests (without workflow_id)', () => {
 
   test('get default diagram by user_id (no default)', async () => {
     const diagramCore = new DiagramCore(db);
-    const payload = _.cloneDeep({ ...diagramPayload, user_default: false });
+    const payload = _.cloneDeep({
+      ...diagramPayload,
+      user_default: false,
+      workflow_data: workflowPayload,
+    });
     await diagramCore.saveDiagram(payload);
-    const diagram = await diagramCore.getDefaultDiagram(diagramPayload.user_id);
+    const diagram = await diagramCore.getDefaultDiagram(
+      diagramPayload.user_id,
+      { workflow_id: workflowPayload.id }
+    );
     expect(diagram.user_id).toEqual('96293285-33b7-4a69-9b64-822059569734');
     expect(diagram.user_default).toBe(false);
     await diagramCore.deleteDiagram(diagram.id);
@@ -118,9 +140,13 @@ describe('DiagramCore tests (without workflow_id)', () => {
       ...diagramPayload,
       user_id: other_user_id,
       isPublic: true,
+      workflow_data: workflowPayload,
     });
     await diagramCore.saveDiagram(payload);
-    const diagram = await diagramCore.getDefaultDiagram(diagramPayload.user_id);
+    const diagram = await diagramCore.getDefaultDiagram(
+      diagramPayload.user_id,
+      { workflow_id: workflowPayload.id }
+    );
     expect(diagram.id).toBeDefined();
     await diagramCore.deleteDiagram(diagram.id);
   });
@@ -187,13 +213,7 @@ describe('DiagramCore tests (with workflow_id)', () => {
   test('create diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload);
-    payload.workflow_data = {
-      id: uuid(),
-      name: 'Workflow Example',
-      version: 1,
-      server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
-      blueprint_spec,
-    };
+    payload.workflow_data = workflowPayload;
     const diagram = await diagramCore.saveDiagram(payload);
     expect(validate(diagram.id)).toBeTruthy();
     expect(diagram.name).toEqual('Test');
@@ -237,13 +257,7 @@ describe('DiagramCore tests (with workflow_id)', () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep({ ...diagramPayload, user_default: true });
     const workflow_id = 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f';
-    payload.workflow_data = {
-      id: workflow_id,
-      name: 'Workflow Example',
-      version: 1,
-      server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
-      blueprint_spec,
-    };
+    payload.workflow_data = workflowPayload;
     await diagramCore.saveDiagram(payload);
     // await populateDiagram(payload);
     const diagram = await diagramCore.getDefaultDiagram(
@@ -259,13 +273,7 @@ describe('DiagramCore tests (public diagrams)', () => {
   test('create diagram', async () => {
     const diagramCore = new DiagramCore(db);
     const payload = _.cloneDeep(diagramPayload);
-    payload.workflow_data = {
-      id: uuid(),
-      name: 'Workflow Example',
-      version: 1,
-      server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
-      blueprint_spec,
-    };
+    payload.workflow_data = workflowPayload;
     payload.isPublic = true;
     const diagram = await diagramCore.saveDiagram(payload);
     expect(validate(diagram.id)).toBeTruthy();
