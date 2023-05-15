@@ -1,3 +1,10 @@
+## [1.6.0-rc.9](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.8...v1.6.0-rc.9) (2023-05-15)
+
+
+### Features
+
+* adjust getDefaultDiagram method to use workflow_id filter ([2280d69](https://github.com/flow-build/diagrams-core/commit/2280d697710a4bbcf8e5c0a7bec7cd7600811e20))
+
 ## [1.6.0-rc.8](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.7...v1.6.0-rc.8) (2023-05-12)
 
 
