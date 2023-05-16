@@ -1,3 +1,10 @@
+## [1.6.0-rc.10](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.9...v1.6.0-rc.10) (2023-05-16)
+
+
+### Bug Fixes
+
+* adjust setDefault & saveDiagram methods ([4571fb2](https://github.com/flow-build/diagrams-core/commit/4571fb2c59884f977550cebeec815a6ce707defe))
+
 ## [1.6.0-rc.9](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.8...v1.6.0-rc.9) (2023-05-15)
 
 
