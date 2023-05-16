@@ -1,4 +1,3 @@
-const { v4: uuid } = require('uuid');
 const { Diagram } = require('../entities/diagram');
 const { DiagramCore } = require('../../index');
 const { validate } = require('uuid');
@@ -18,7 +17,7 @@ const diagramPayload = {
 };
 
 const workflowPayload = {
-  id: uuid(),
+  id: '681b5bc2-7fea-42f0-892c-f78525a6ccc7',
   name: 'Workflow Example',
   version: 1,
   server_id: '1c8f314b-5421-40cb-9a5b-73fca821c88f',
@@ -169,7 +168,10 @@ describe('DiagramCore tests (without workflow_id)', () => {
 
   test('set as default', async () => {
     const diagramCore = new DiagramCore(db);
-    const payload = _.cloneDeep(diagramPayload);
+    const payload = _.cloneDeep({
+      ...diagramPayload,
+      workflow_data: workflowPayload,
+    });
     const diagramCreated_1 = await diagramCore.saveDiagram(payload);
     const diagramCreated_2 = await diagramCore.saveDiagram({
       ...payload,

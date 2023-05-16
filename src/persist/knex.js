@@ -90,9 +90,10 @@ class DiagramKnexPersist extends KnexPersist {
       .returning('*');
   }
 
-  async unsetDefault({ user_id, exception }) {
+  async unsetDefault({ user_id, exception, blueprint_id }) {
     return await this._db(this._table)
       .where('user_id', user_id)
+      .andWhere('blueprint_id', blueprint_id)
       .update({ user_default: false })
       .modify((builder) => {
         if (exception) {
@@ -101,7 +102,7 @@ class DiagramKnexPersist extends KnexPersist {
       });
   }
 
-  async setDefault({ user_id, id }) {
+  async setDefault({ user_id, id, blueprint_id }) {
     return await this._db.raw(`
       update diagram set user_default = case
       when id='${id}' then true
@@ -109,6 +110,7 @@ class DiagramKnexPersist extends KnexPersist {
       end,
       updated_at = now()
       where user_id='${user_id}'
+      and blueprint_id='${blueprint_id}'
       returning *;
     `);
   }
@@ -199,7 +201,8 @@ class DiagramKnexPersist extends KnexPersist {
       .where({ user_id: user_id, 'workflow.id': workflow_id })
       .orWhere({ is_public: true, 'workflow.id': workflow_id })
       .orderBy([
-        { column: 'diagram.is_public', order: 'asc' },
+        { column: 'diagram.user_id', order: 'asc' },
+        { column: 'diagram.is_public', order: 'desc' },
         { column: 'diagram.updated_at', order: 'desc' },
       ]);
   }
