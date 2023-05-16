@@ -61,7 +61,7 @@ describe('DiagramCore tests (without workflow_id)', () => {
 
   test('get all diagrams', async () => {
     const diagramCore = new DiagramCore(db);
-    diagramCore.saveDiagram(diagramPayload);
+    await diagramCore.saveDiagram(diagramPayload);
     const diagrams = await diagramCore.getAllDiagrams(diagramPayload);
     expect(diagrams.length).toBeTruthy();
   });
@@ -261,7 +261,6 @@ describe('DiagramCore tests (with workflow_id)', () => {
     const workflow_id = 'ae7e95f6-787a-4c0b-8e1a-4cc122e7d68f';
     payload.workflow_data = workflowPayload;
     await diagramCore.saveDiagram(payload);
-    // await populateDiagram(payload);
     const diagram = await diagramCore.getDefaultDiagram(
       '96293285-33b7-4a69-9b64-822059569734',
       { workflow_id }
