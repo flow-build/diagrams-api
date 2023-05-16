@@ -1,3 +1,29 @@
+## [1.6.0](https://github.com/flow-build/diagrams-core/compare/v1.5.0...v1.6.0) (2023-05-16)
+
+
+### Features
+
+* add deleteBatch & getBatch methods ([150814a](https://github.com/flow-build/diagrams-core/commit/150814a19054d2f769dae50f079fd0aee421cc22))
+* add fetchByUrl method on serverCore ([a5058ca](https://github.com/flow-build/diagrams-core/commit/a5058ca81bd4cc4b750e07ef87d8020e57fce54f))
+* add methods getServer & updateServer on serverCore ([6ffa0c9](https://github.com/flow-build/diagrams-core/commit/6ffa0c9c61623d1aaa7eee8558c4def44f124d38))
+* add server entity ([135bbe9](https://github.com/flow-build/diagrams-core/commit/135bbe92fd03a2a31d2506cd9d859ffec88dc306))
+* adds 'type' column to diagram table ([a34d8b3](https://github.com/flow-build/diagrams-core/commit/a34d8b3d10bf209dfe55939ca4a26c835528cc2e))
+* adds 'type' to saveDiagram ([7434e8d](https://github.com/flow-build/diagrams-core/commit/7434e8dbbe87b236fbe0da567b355e6637a0cf68))
+* adds getDefaultDiagram method to Diagram entity ([df29eb3](https://github.com/flow-build/diagrams-core/commit/df29eb33a2683a279c726f10c40eda2fa4a22f4d))
+* adds setDefault method to 'Diagram' entity ([03ca213](https://github.com/flow-build/diagrams-core/commit/03ca213d9bd3ab832ca3821fa6bcd4f7d0df9841))
+* adjust getDefaultDiagram method to use workflow_id filter ([2280d69](https://github.com/flow-build/diagrams-core/commit/2280d697710a4bbcf8e5c0a7bec7cd7600811e20))
+* update entities for new database model ([5798630](https://github.com/flow-build/diagrams-core/commit/57986303b7d5490e45d82bccfe3c8d1579a8f689))
+* updates 'getByUserAndWF' query ([8f7319b](https://github.com/flow-build/diagrams-core/commit/8f7319b91d893e3207e6d2458d7a80eb37487a96))
+
+
+### Bug Fixes
+
+* adjust method getAllServers of serverCore ([eb76ec5](https://github.com/flow-build/diagrams-core/commit/eb76ec5327d03a8aa1abcd09801e4e7cb8301e32))
+* adjust property namespace on Server entity ([0c656aa](https://github.com/flow-build/diagrams-core/commit/0c656aa856081296aacdec81484f3f7616649eef))
+* adjust setDefault & saveDiagram methods ([4571fb2](https://github.com/flow-build/diagrams-core/commit/4571fb2c59884f977550cebeec815a6ce707defe))
+* adjustments & refactors for release ([87546b2](https://github.com/flow-build/diagrams-core/commit/87546b2637185c8680004bea183042aaaf296ea1))
+* sets back 'unsetDefault' to be used on 'saveDiagram' ([f76aa54](https://github.com/flow-build/diagrams-core/commit/f76aa542b546ce1894a7d2f40b4c10f978c46c1e))
+
 ## [1.6.0-rc.10](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.9...v1.6.0-rc.10) (2023-05-16)
 
 
