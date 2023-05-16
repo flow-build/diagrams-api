@@ -1,3 +1,87 @@
+## [1.6.0-rc.10](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.9...v1.6.0-rc.10) (2023-05-16)
+
+
+### Bug Fixes
+
+* adjust setDefault & saveDiagram methods ([4571fb2](https://github.com/flow-build/diagrams-core/commit/4571fb2c59884f977550cebeec815a6ce707defe))
+
+## [1.6.0-rc.9](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.8...v1.6.0-rc.9) (2023-05-15)
+
+
+### Features
+
+* adjust getDefaultDiagram method to use workflow_id filter ([2280d69](https://github.com/flow-build/diagrams-core/commit/2280d697710a4bbcf8e5c0a7bec7cd7600811e20))
+
+## [1.6.0-rc.8](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.7...v1.6.0-rc.8) (2023-05-12)
+
+
+### Features
+
+* add fetchByUrl method on serverCore ([a5058ca](https://github.com/flow-build/diagrams-core/commit/a5058ca81bd4cc4b750e07ef87d8020e57fce54f))
+
+## [1.6.0-rc.7](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.6...v1.6.0-rc.7) (2023-05-12)
+
+
+### Features
+
+* add deleteBatch & getBatch methods ([150814a](https://github.com/flow-build/diagrams-core/commit/150814a19054d2f769dae50f079fd0aee421cc22))
+
+
+### Bug Fixes
+
+* adjustments & refactors for release ([87546b2](https://github.com/flow-build/diagrams-core/commit/87546b2637185c8680004bea183042aaaf296ea1))
+
+## [1.6.0-rc.6](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.5...v1.6.0-rc.6) (2023-05-11)
+
+
+### Features
+
+* updates 'getByUserAndWF' query ([8f7319b](https://github.com/flow-build/diagrams-core/commit/8f7319b91d893e3207e6d2458d7a80eb37487a96))
+
+## [1.6.0-rc.5](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.4...v1.6.0-rc.5) (2023-05-11)
+
+
+### Features
+
+* adds getDefaultDiagram method to Diagram entity ([df29eb3](https://github.com/flow-build/diagrams-core/commit/df29eb33a2683a279c726f10c40eda2fa4a22f4d))
+
+## [1.6.0-rc.4](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.3...v1.6.0-rc.4) (2023-05-11)
+
+
+### Features
+
+* add methods getServer & updateServer on serverCore ([6ffa0c9](https://github.com/flow-build/diagrams-core/commit/6ffa0c9c61623d1aaa7eee8558c4def44f124d38))
+* adds 'type' column to diagram table ([a34d8b3](https://github.com/flow-build/diagrams-core/commit/a34d8b3d10bf209dfe55939ca4a26c835528cc2e))
+* adds 'type' to saveDiagram ([7434e8d](https://github.com/flow-build/diagrams-core/commit/7434e8dbbe87b236fbe0da567b355e6637a0cf68))
+
+## [1.6.0-rc.3](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.2...v1.6.0-rc.3) (2023-05-10)
+
+
+### Bug Fixes
+
+* adjust method getAllServers of serverCore ([eb76ec5](https://github.com/flow-build/diagrams-core/commit/eb76ec5327d03a8aa1abcd09801e4e7cb8301e32))
+* adjust property namespace on Server entity ([0c656aa](https://github.com/flow-build/diagrams-core/commit/0c656aa856081296aacdec81484f3f7616649eef))
+
+## [1.6.0-rc.2](https://github.com/flow-build/diagrams-core/compare/v1.6.0-rc.1...v1.6.0-rc.2) (2023-05-10)
+
+
+### Features
+
+* adds setDefault method to 'Diagram' entity ([03ca213](https://github.com/flow-build/diagrams-core/commit/03ca213d9bd3ab832ca3821fa6bcd4f7d0df9841))
+
+
+### Bug Fixes
+
+* sets back 'unsetDefault' to be used on 'saveDiagram' ([f76aa54](https://github.com/flow-build/diagrams-core/commit/f76aa542b546ce1894a7d2f40b4c10f978c46c1e))
+
+## [1.6.0-rc.1](https://github.com/flow-build/diagrams-core/compare/v1.5.0...v1.6.0-rc.1) (2023-05-09)
+
+
+### Features
+
+* add server entity ([135bbe9](https://github.com/flow-build/diagrams-core/commit/135bbe92fd03a2a31d2506cd9d859ffec88dc306))
+* update entities for new database model ([5798630](https://github.com/flow-build/diagrams-core/commit/57986303b7d5490e45d82bccfe3c8d1579a8f689))
+
 ## [1.5.0](https://github.com/flow-build/diagrams-core/compare/v1.4.0...v1.5.0) (2023-01-26)
 
 
@@ -27,6 +111,13 @@
 * :lock: fix knex and json5 sec issues ([114ad74](https://github.com/flow-build/diagrams-core/commit/114ad748ae0eee2720eb3856485df9698edb2644))
 
 ## [1.3.1](https://github.com/flow-build/diagrams-core/compare/v1.3.0...v1.3.1) (2022-10-28)
+
+
+### Bug Fixes
+
+* adjust migrations ([0e5e612](https://github.com/flow-build/diagrams-core/commit/0e5e6127734101d7111480beeadd313e53d75a6b))
+
+## [1.3.1-rc.1](https://github.com/flow-build/diagrams-core/compare/v1.3.0...v1.3.1-rc.1) (2022-10-28)
 
 
 ### Bug Fixes

@@ -2,11 +2,9 @@ const { logger } = require('./utils/logger');
 const { PersistorProvider } = require('./persist/provider');
 const { Diagram } = require('./entities/diagram');
 const { BlueprintCore } = require('./blueprintCore');
-const { DiagramToWorkflowCore } = require('./diagramToWorkflowCore');
 const { WorkflowCore } = require('./workflowCore');
 
 class DiagramCore {
-
   static get instance() {
     return Diagram._instance;
   }
@@ -34,36 +32,84 @@ class DiagramCore {
 
   async saveDiagram(diagram_obj) {
     logger.debug('saveDiagram service called');
-    const { name, user_id, diagram_xml, workflow_data, isPublic } = diagram_obj;
+    const {
+      name,
+      user_id,
+      user_default,
+      diagram_xml,
+      workflow_data,
+      isPublic,
+      type,
+      blueprint_id,
+    } = diagram_obj;
     let userId;
-    if(!isPublic) {
-      userId = user_id
+    if (!isPublic) {
+      userId = user_id;
     }
-    const diagram = await new Diagram(name, userId, diagram_xml).save();
+    if (user_default && blueprint_id) {
+      await Diagram.unsetDefault({ user_id: userId, blueprint_id });
+    }
+    const diagram = await new Diagram(
+      name,
+      diagram_xml,
+      userId,
+      isPublic,
+      blueprint_id || null,
+      user_default,
+      type
+    ).save();
 
     let blueprint;
-    if(workflow_data) {
-      if(workflow_data.blueprint_spec) {
-        //TODO: verify whether the blueprint_spec already exists in the database
-        blueprint = await new BlueprintCore(this._db).saveBlueprint(workflow_data.blueprint_spec)        
-        await Diagram.update(diagram.id, { blueprint_id: blueprint.id })
+    if (workflow_data) {
+      if (workflow_data.blueprint_spec) {
+        blueprint = await new BlueprintCore(this._db).saveBlueprint(
+          workflow_data.blueprint_spec
+        );
+        await Diagram.update(diagram.id, { blueprint_id: blueprint.id });
       }
-      if(workflow_data.id) {
-        const workflow = await new WorkflowCore(this._db).saveWorkflow({ id: workflow_data.id, server: workflow_data.server, blueprint_id: blueprint.id })
-        await new DiagramToWorkflowCore(this._db).saveDiagramToWorkflow({ diagram_id: diagram.id, workflow_id: workflow_data.id })
+      if (workflow_data.id) {
+        const workflow = await new WorkflowCore(this._db).saveWorkflow({
+          id: workflow_data.id,
+          name: workflow_data.name,
+          version: workflow_data.version,
+          server_id: workflow_data.server_id,
+          blueprint_id: blueprint.id,
+        });
         const response = await Diagram.fetch(diagram.id);
         delete response.diagram_xml;
-        return { ...response, ...{ workflow_id: workflow.id, server: workflow.server } }
-      }      
-    } 
-    
+        return {
+          ...response,
+          ...{
+            workflow_id: workflow.id,
+            workflow_name: workflow.name,
+            version: workflow.version,
+            server_id: workflow.server_id,
+            blueprint_id: workflow.blueprint_id,
+          },
+        };
+      }
+    }
+
     return diagram;
-    
+  }
+
+  async setAsDefault(id) {
+    logger.debug('setAsDefault service called');
+
+    const diagram = await Diagram.fetch(id);
+    if (diagram) {
+      return await Diagram.setDefault({
+        id,
+        user_id: diagram.user_id,
+        blueprint_id: diagram.blueprint_id,
+      });
+    }
+    throw new Error('Diagram not found');
   }
 
   async getAllDiagrams() {
     logger.debug('getAllDiagrams service called');
-  
+
     return await Diagram.fetchAll();
   }
 
@@ -71,6 +117,18 @@ class DiagramCore {
     logger.debug('getDiagramsByUserId service called');
 
     return await Diagram.fetchByUserId(user_id);
+  }
+
+  async getDiagramsBatch(ids) {
+    logger.debug('getDiagramsBatch service called');
+
+    return await Diagram.fetchBatch(ids);
+  }
+
+  async getDiagramsByBlueprintsBatch(blueprint_ids) {
+    logger.debug('getDiagramsByBlueprintsBatch service called');
+
+    return await Diagram.fetchDiagramsByBlueprintsBatch(blueprint_ids);
   }
 
   async getDiagramById(id) {
@@ -85,17 +143,22 @@ class DiagramCore {
     return await Diagram.fetchByWorkflowId(workflow_id, user_id);
   }
 
-
-  async getLatestDiagramByWorkflowId(workflow_id, user_id = null) {
+  async getLatestDiagramByWorkflowId(workflow_id) {
     logger.debug('getLatestDiagramByWorkflowId service called');
-  
-    return await Diagram.fetchLatestByWorkflowId(workflow_id, user_id);
+
+    return await Diagram.fetchLatestByWorkflowId(workflow_id);
   }
 
   async getDiagramsByUserAndWF(user_id, workflow_id) {
     logger.debug('getDiagramsByUserAndWF service called');
-  
+
     return await Diagram.fetchByUserAndWF(user_id, workflow_id);
+  }
+
+  async getDefaultDiagram(user_id, filters = {}) {
+    logger.debug('getDefaultDiagram service called');
+
+    return await Diagram.getDefaultDiagram(user_id, filters);
   }
 
   async updateDiagram(id, diagram_obj) {
@@ -109,8 +172,14 @@ class DiagramCore {
 
     return await Diagram.delete(id);
   }
+
+  async deleteDiagramsBatch(ids) {
+    logger.debug('deleteDiagramsBatch service called');
+
+    return await Diagram.deleteBatch(ids);
+  }
 }
 
 module.exports = {
-  DiagramCore
-}
+  DiagramCore,
+};

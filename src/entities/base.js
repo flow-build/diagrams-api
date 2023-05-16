@@ -14,11 +14,18 @@ class BaseEntity {
 
 class PersistedEntity extends BaseEntity {
   static getPersist() {
-    return new PersistorSingleton().getPersistInstance(this.getEntityClass().name);
+    return new PersistorSingleton().getPersistInstance(
+      this.getEntityClass().name
+    );
   }
 
   static async fetch(...args) {
     const serialized = await this.getPersist().get(...args);
+    return this.deserialize(serialized);
+  }
+
+  static async fetchBatch(...args) {
+    const serialized = await this.getPersist().getBatch(...args);
     return this.deserialize(serialized);
   }
 
@@ -47,13 +54,26 @@ class PersistedEntity extends BaseEntity {
     return this.deserialize(serialized);
   }
 
+  static async fetchWorkflowsByServer(...args) {
+    const serialized = await this.getPersist().getWorkflowsByServer(...args);
+    return this.deserialize(serialized);
+  }
+
   static async update(...args) {
-    const [ serialized ] = await this.getPersist().update(...args);
+    const [serialized] = await this.getPersist().update(...args);
     return this.deserialize(serialized);
   }
 
   static async delete(...args) {
     return await this.getPersist().delete(...args);
+  }
+
+  static async deleteBatch(...args) {
+    return await this.getPersist().deleteBatch(...args);
+  }
+
+  static async deleteWorkflowsByServer(...args) {
+    return await this.getPersist().deleteWorkflowsByServer(...args);
   }
 
   static async deleteByDiagramId(...args) {
@@ -65,12 +85,16 @@ class PersistedEntity extends BaseEntity {
   }
 
   static async fetchDiagramIdsByWorkflowId(...args) {
-    const serialized = await this.getPersist().getDiagramIdsByWorkflowId(...args);
+    const serialized = await this.getPersist().getDiagramIdsByWorkflowId(
+      ...args
+    );
     return this.deserialize(serialized);
   }
-  
+
   static async fetchWorkflowIdsByDiagramId(...args) {
-    const serialized = await this.getPersist().getWorkflowIdsByDiagramId(...args);
+    const serialized = await this.getPersist().getWorkflowIdsByDiagramId(
+      ...args
+    );
     return this.deserialize(serialized);
   }
 
@@ -95,5 +119,5 @@ class PersistedEntity extends BaseEntity {
 
 module.exports = {
   BaseEntity,
-  PersistedEntity
-}
+  PersistedEntity,
+};

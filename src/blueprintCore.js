@@ -3,7 +3,6 @@ const { PersistorProvider } = require('./persist/provider');
 const { Blueprint } = require('./entities/blueprint');
 
 class BlueprintCore {
-
   static get instance() {
     return Blueprint._instance;
   }
@@ -35,6 +34,12 @@ class BlueprintCore {
     return await new Blueprint(blueprint_spec).save();
   }
 
+  async getAllBlueprints() {
+    logger.debug('getAllBlueprints service called');
+
+    return await Blueprint.fetchAll();
+  }
+
   async getBlueprintById(id) {
     logger.debug('getBlueprintById service called');
 
@@ -52,8 +57,14 @@ class BlueprintCore {
 
     return await Blueprint.delete(id);
   }
+
+  async deleteBlueprintsBatch(ids) {
+    logger.debug('deleteBlueprintsBatch service called');
+
+    return await Blueprint.deleteBatch(ids);
+  }
 }
 
 module.exports = {
-  BlueprintCore
-}
+  BlueprintCore,
+};
